@@ -1,30 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import {TabView} from 'react-native-tab-view';
-import { useFocusEffect } from '@react-navigation/native';
-import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
-
-const styles = StyleSheet.create({
-  person: {
-    marginTop: 10,
-    marginBottom: 10,
-    width: 150,
-    height: 150,
-    alignSelf: 'flex-start',
-  },
-  signIn: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    marginTop: 50,
-    borderRadius: 50,
-  },
-  signInText: {
-    paddingHorizontal: 5,
-    paddingVertical: 5,
-    color: 'white',
-    fontSize: 20,
-  },
-});
+import { TabView } from 'react-native-tab-view';
 
 const Front = ({ source }) => (
   <Image
@@ -61,90 +37,100 @@ const BackShiny = ({ source }) => (
 const renderScene = ({ route }) => {
   switch (route.key) {
     case 'front':
-      console.log(route.source);
       return <Front source={route.source} />;
     case 'back':
-      console.log(route.source);
       return <Back source={route.source} />;
     case 'frontShiny':
-      console.log(route.source);
       return <FrontShiny source={route.source} />;
     case 'backShiny':
-      console.log(route.source);
       return <BackShiny source={route.source} />;
     default:
-      return <Text>Test</Text>;
+      return null;
   }
 };
 
-const PersonDetails = ({route, navigation}) => {
+const PersonDetails = ({ route, navigation }) => {
   const [index, setIndex] = useState(0);
-  const [routes, setRoutes] = useState([
-    {
-      key: 'front',
-      title: '',
-    },
-    {
-      key: 'back',
-      title: '',
-    },
-    {
-      key: 'frontShiny',
-      title: '',
-    },
-    {
-      key: 'backShiny',
-      title: '',
-    },
-  ]);
-  useFocusEffect(
-    React.useCallback(() => {
+  const [routes, setRoutes] = useState([]);
+  useEffect(() => {
       const { source } = route.params;
-      console.log(source);
-      setRoutes(
-        [
-          {
-            key: 'back',
-            title: '',
-            source: source.back,
-          },
-          {
-            key: 'front',
-            title: '',
-            source: source.front,
-          },
-          {
-            key: 'frontShiny',
-            title: '',
-            source: source.frontShiny,
-          },
-          {
-            key: 'backShiny',
-            title: '',
-            source: source.BackShiny,
-          },
-        ]
-      );
-    }, [])
-    );
+      setRoutes([
+        {
+          key: 'back',
+          title: 'Back',
+          source: source.back,
+        },
+        {
+          key: 'front',
+          title: 'Front',
+          source: source.front,
+        },
+        {
+          key: 'frontShiny',
+          title: 'Front Shiny',
+          source: source.frontShiny,
+        },
+        {
+          key: 'backShiny',
+          title: 'Back Shiny',
+          source: source.backShiny,
+        },
+      ]);
+    }, [route.params]);
 
   const { name } = route.params;
   return (
-    <View style={{ flex: 1}}>
+    <View style={styles.screenLayout} >
       <TouchableOpacity
         style={styles.signIn}
-        onPress={() => navigation.navigate("RnCamera")}
+        onPress={() => navigation.navigate('RnCamera')}
       >
         <Text style={styles.signInText}>Camera</Text>
       </TouchableOpacity>
-      <Text>{name}</Text>
       <TabView
-        navigationState={{index: 0, routes}}
+        style={styles.personTabImage}
+        navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
       />
+      <Text style={styles.titleText}>{name}</Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  screenLayout: {
+    flex: 1,
+  },
+  person: {
+    marginTop: 10,
+    marginBottom: 10,
+    width: 150,
+    height: 150,
+    alignSelf: 'flex-start',
+  },
+  signIn: {
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    marginTop: 50,
+    borderRadius: 50,
+  },
+  signInText: {
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+    color: 'white',
+    fontSize: 20,
+  },
+  titleText: {
+    flex: 1,
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+    textTransform: 'capitalize',
+    fontWeight: 'bold',
+  },
+  personTabImage: {
+    flex: 1,
+  },
+});
 
 export default PersonDetails;

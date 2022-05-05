@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,6 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
 
 import { loadPersons, loadExtendPersonData, loadExtendAbilities } from '../api';
 
@@ -63,71 +62,71 @@ const Persons = ({ navigation }) => {
 
   const [isVisible, setIsVisible] = useState(false);
   const [update, setUpdate] = useState(0);
-  useFocusEffect(
-    React.useCallback(() => {
-      setIsVisible(false);
-      if (update === 0) {
-        setPersonData('');
-        personListData = [];
-      }
-      const loadPersonHendler = async () => {
-        const persons = await loadPersons(
-          `https://pokeapi.co/api/v2/pokemon?limit=10&offset=${update}`,
-        );
-        const keys = Object.keys(persons.results);
-        for (let k = 0; k < keys.length; k++) {
-          const person = persons.results[k];
-          const shortAbilities = [];
-          const extendPersonData = await loadExtendPersonData(person.url);
-          if (extendPersonData) {
-            const parsedEffect: {effect: any; short_effect: any}[] = [];
-            const parsedFlavor: any[] = [];
-            const nodes = Object.keys(extendPersonData.abilities);
-            for (let i = 0; i < nodes.length; i++) {
-              const {ability} = extendPersonData.abilities[i];
-              const loadedAbility = await loadExtendAbilities(ability.url);
-              if (loadedAbility) {
-                loadedAbility.effectEntries.forEach((item: {}) => {
-                  if (item.language.name === 'en') {
-                    const {effect, short_effect} = item;
-                    parsedEffect.push({effect, short_effect});
-                  }
-                });
-                loadedAbility.flavorEntries.forEach((flavor: {}) => {
-                  if (flavor.language.name === 'en') {
-                    parsedFlavor.push(flavor.flavor_text);
-                  }
-                });
-              }
-              const shortAbility = {
-                effect: parsedEffect,
-                flavor: parsedFlavor,
-                name: ability.name,
-              };
-              shortAbilities.push(shortAbility);
-            }
-            const personData = {
-              id: extendPersonData.id,
-              name: person.name,
-              shortAbilities,
-              source: {
-                front: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${extendPersonData.id}.png`,
-                frontShiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${extendPersonData.id}.png`,
-                back: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${extendPersonData.id}.png`,
-                backShiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/${extendPersonData.id}.png`,
-              },
-            };
-            personListData.push(personData);
-          }
-        }
-        personData.length ? setPersonData(personData.concat(personListData)) : setPersonData(personListData);
-        setIsVisible(true);
-      };
-      loadPersonHendler();
-    }, [update]),
-  );
 
-  if (!isVisible) {
+  const apiLoader = async () => {
+    const persons = await loadPersons(
+      `https://pokeapi.co/api/v2/pokemon?limit=2&offset=${update}`,
+    );
+    const keys = Object.keys(persons.results);
+    for (let k = 0; k < keys.length; k++) {
+      const person = persons.results[k];
+      const shortAbilities = [];
+      const extendPersonData = await loadExtendPersonData(person.url);
+      if (extendPersonData) {
+        const parsedEffect: {effect: any; short_effect: any}[] = [];
+        const parsedFlavor: any[] = [];
+        const nodes = Object.keys(extendPersonData.abilities);
+        for (let i = 0; i < nodes.length; i++) {
+          const {ability} = extendPersonData.abilities[i];
+          const loadedAbility = await loadExtendAbilities(ability.url);
+          if (loadedAbility) {
+            loadedAbility.effectEntries.forEach((item: {}) => {
+              if (item.language.name === 'en') {
+                const {effect, short_effect} = item;
+                parsedEffect.push({effect, short_effect});
+              }
+            });
+            loadedAbility.flavorEntries.forEach((flavor: {}) => {
+              if (flavor.language.name === 'en') {
+                parsedFlavor.push(flavor.flavor_text);
+              }
+            });
+          }
+          const shortAbility = {
+            effect: parsedEffect,
+            flavor: parsedFlavor,
+            name: ability.name,
+          };
+          shortAbilities.push(shortAbility);
+        }
+        const personData = {
+          id: extendPersonData.id,
+          name: person.name,
+          shortAbilities,
+          source: {
+            front: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${extendPersonData.id}.png`,
+            frontShiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${extendPersonData.id}.png`,
+            back: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${extendPersonData.id}.png`,
+            backShiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/${extendPersonData.id}.png`,
+          },
+        };
+        personListData.push(personData);
+      }
+    }
+    personData.length ? setPersonData([...personData, ...personListData]) : setPersonData(personListData);
+    setIsVisible(true);
+  }
+
+  useEffect(() => {
+    setIsVisible(false);
+    if (update === 0) {
+      setPersonData('');
+      personListData = [];
+    }
+    apiLoader();
+    }, [update]);
+
+/*   if (!isVisible) {
     return (
       <View
         style={{
@@ -139,11 +138,10 @@ const Persons = ({ navigation }) => {
         <ActivityIndicator size="large" />
       </View>
     );
-  }
-  const loadNextHendler = async () => {
-    const newUpdate = update + 10;
-    await setUpdate(newUpdate);
-    console.log(update);
+  } */
+  const loadNextHendler = () => {
+    const newUpdate = update + 2;
+    setUpdate(newUpdate);
   };
 
   return (

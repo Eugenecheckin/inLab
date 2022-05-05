@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 42,
   },
   appLogo: {
-    marginTop: 50,
+    marginTop: 100,
     marginBottom: 130,
     width: 150,
     height: 150,
