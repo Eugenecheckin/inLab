@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import { TabView } from 'react-native-tab-view';
 
 const Front = ({ source }) => (
@@ -49,21 +49,21 @@ const renderScene = ({ route }) => {
   }
 };
 
-const PersonDetails = ({ route, navigation }) => {
+const PersonDetails = ({ route }) => {
   const [index, setIndex] = useState(0);
   const [routes, setRoutes] = useState([]);
   useEffect(() => {
       const { source } = route.params;
       setRoutes([
         {
-          key: 'back',
-          title: 'Back',
-          source: source.back,
-        },
-        {
           key: 'front',
           title: 'Front',
           source: source.front,
+        },
+        {
+          key: 'back',
+          title: 'Back',
+          source: source.back,
         },
         {
           key: 'frontShiny',
@@ -81,12 +81,6 @@ const PersonDetails = ({ route, navigation }) => {
   const { name } = route.params;
   return (
     <View style={styles.screenLayout} >
-      <TouchableOpacity
-        style={styles.signIn}
-        onPress={() => navigation.navigate('RnCamera')}
-      >
-        <Text style={styles.signInText}>Camera</Text>
-      </TouchableOpacity>
       <TabView
         style={styles.personTabImage}
         navigationState={{ index, routes }}
@@ -101,6 +95,7 @@ const PersonDetails = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   screenLayout: {
     flex: 1,
+    marginTop: 35,
   },
   person: {
     marginTop: 10,
@@ -108,18 +103,6 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     alignSelf: 'flex-start',
-  },
-  signIn: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    marginTop: 50,
-    borderRadius: 50,
-  },
-  signInText: {
-    paddingHorizontal: 5,
-    paddingVertical: 5,
-    color: 'white',
-    fontSize: 20,
   },
   titleText: {
     flex: 1,
