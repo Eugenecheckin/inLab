@@ -16,6 +16,7 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
+    initialRouteName="Persons"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {
@@ -35,7 +36,7 @@ function MyTabs() {
         options={{
           headerShown: false ,
           tabBarIcon: () => (
-            <MaterialCommunityIcons name="home" color="#4F8EF7" size={25} />
+            <MaterialCommunityIcons name="home" color="#576270" size={25} />
           ),
         }}/>
       <Tab.Screen
@@ -44,7 +45,7 @@ function MyTabs() {
         options={{
           headerShown: false ,
           tabBarIcon: () => (
-            <MaterialCommunityIcons name="home" color="#4F8EF7" size={25} />
+            <MaterialCommunityIcons name="compass" color="#576270" size={25} />
           ),
         }}/>
       <Tab.Screen
@@ -53,7 +54,7 @@ function MyTabs() {
         options={{
           headerShown: false ,
           tabBarIcon: () => (
-            <MaterialCommunityIcons name="home" color="#4F8EF7" size={25} />
+            <MaterialCommunityIcons name="magnify" color="#576270" size={25} />
           ),
         }}/>
       <Tab.Screen
@@ -62,7 +63,7 @@ function MyTabs() {
         options={{
           headerShown: false ,
           tabBarIcon: () => (
-            <MaterialCommunityIcons name="home" color="#4F8EF7" size={25} />
+            <MaterialCommunityIcons name="camera" color="#576270" size={25} />
           ),
         }}/>
     </Tab.Navigator>

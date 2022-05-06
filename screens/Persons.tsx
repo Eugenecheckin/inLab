@@ -65,7 +65,7 @@ const Persons = ({ navigation }) => {
 
   const apiLoader = async () => {
     const persons = await loadPersons(
-      `https://pokeapi.co/api/v2/pokemon?limit=2&offset=${update}`,
+      `https://pokeapi.co/api/v2/pokemon?limit=7&offset=${update}`,
     );
     const keys = Object.keys(persons.results);
     for (let k = 0; k < keys.length; k++) {
@@ -140,7 +140,7 @@ const Persons = ({ navigation }) => {
     );
   } */
   const loadNextHendler = () => {
-    const newUpdate = update + 2;
+    const newUpdate = update + 7;
     setUpdate(newUpdate);
   };
 
