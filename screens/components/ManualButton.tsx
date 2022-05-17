@@ -5,11 +5,11 @@ import {
   StyleSheet,
 } from 'react-native';
 
-const Button = ({ navigation, navigateTo, text }) => {
+const ManualButton = ({ text, callback }) => {
   return (
     <TouchableOpacity
       style={styles.buttonArrea}
-      onPress={() => navigation.navigate(navigateTo)}>
+      onPress={callback}>
       <Text style={styles.text}>
         {text}
       </Text>
@@ -32,5 +32,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Button;
+export default ManualButton;
 

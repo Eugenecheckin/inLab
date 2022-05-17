@@ -8,23 +8,38 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import Button from './components/Button';
+import ManualButton from '../components/ManualButton';
 
-const HomeScreen = ({ navigation }) => {
+import appLogo from '../../img/appLogo.png';
+import { postLogin } from '../../api';
+import storeLoginData from '../../store/asyncStore';
 
-  const [username, setUsername] = useState('');
+const Login = ({ navigation }) => {
+
+  const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const loginHendler = async (value) => {
+    try {
+      const responce = await postLogin(value);
+      console.log(responce.data.token);
+      await storeLoginData(responce.data);
+      navigation.navigate('Persons');
+    } catch { console.log('babaX'); }
+  };
   return (
     <View style={styles.sectionContainer}>
-      <Image source={require('../appLogo.png')} style={styles.appLogo} />
+      <Image source={appLogo} style={styles.appLogo} />
       <TextInput
+        autoCapitalize="none"
         style={styles.userData}
-        placeholder="USERNAME"
+        placeholder="EMAIL"
         onChangeText={newText => setUsername(newText)}
-        defaultValue={username}
+        defaultValue={email}
       />
       <TextInput
+        secureTextEntry={true}
+        autoCapitalize="none"
         style={styles.userData}
         placeholder="PASSWORD"
         onChangeText={newText => setPassword(newText)}
@@ -33,7 +48,7 @@ const HomeScreen = ({ navigation }) => {
       <TouchableOpacity style={styles.forgotPasswordView} onPress={() => {}}>
         <Text style={styles.forgotPassword}>forgot password</Text>
       </TouchableOpacity>
-      <Button navigation={navigation} navigateTo="Persons" text="SIGN IN"/>
+      <ManualButton callback={() => loginHendler({email, password})} text="Login"/>
     </View>
   );
 };
@@ -69,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default Login;

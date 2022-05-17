@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   SafeAreaView,
   FlatList,
-  ActivityIndicator,
 } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPersonListData } from '../store/pokeApiSlice';
 
 import { loadPersons, loadExtendPersonData, loadExtendAbilities } from '../api';
 
@@ -41,7 +42,9 @@ const Abillities = ({ ability }) => (
 );
 
 const Persons = ({ navigation }) => {
-
+  const dispatch = useDispatch();
+  const isNoticed = useSelector((state) => state.pokeApi.isNoticed);
+  const personListDataRedux = useSelector((state) => state.pokeApi.personListData);
   let personListData: {
     id: string;
     name: string;
@@ -114,8 +117,10 @@ const Persons = ({ navigation }) => {
       }
     }
     personData.length ? setPersonData([...personData, ...personListData]) : setPersonData(personListData);
+    await dispatch(setPersonListData(personListData));
+    console.log(personListData);
     setIsVisible(true);
-  }
+  };
 
   useEffect(() => {
     setIsVisible(false);
@@ -144,10 +149,13 @@ const Persons = ({ navigation }) => {
     setUpdate(newUpdate);
   };
 
+  console.log(personListDataRedux);
+  console.log(isNoticed);
   return (
     <View>
       <SafeAreaView style={styles.sectionContainer}>
-        <FlatList onEndReached={loadNextHendler}
+        <FlatList
+          onEndReached={loadNextHendler}
           data={personData}
           renderItem={({item}) => (
             <TouchableOpacity
