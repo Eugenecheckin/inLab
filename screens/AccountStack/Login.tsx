@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import ManualButton from '../components/ManualButton';
-
 import appLogo from '../../img/appLogo.png';
-import { postLogin } from '../../api';
+import postLogin from '../../api/authApi';
 import storeLoginData from '../../store/asyncStore';
+
+import ManualButton from '../components/ManualButton';
 
 const Login = ({ navigation }) => {
 
@@ -22,7 +22,6 @@ const Login = ({ navigation }) => {
   const loginHendler = async (value) => {
     try {
       const responce = await postLogin(value);
-      console.log(responce.data.token);
       await storeLoginData(responce.data);
       navigation.navigate('Persons');
     } catch { console.log('babaX'); }
@@ -45,7 +44,7 @@ const Login = ({ navigation }) => {
         onChangeText={newText => setPassword(newText)}
         defaultValue={password}
       />
-      <TouchableOpacity style={styles.forgotPasswordView} onPress={() => {}}>
+      <TouchableOpacity style={styles.forgotPasswordView} onPress={() => {navigation.navigate('ChangePass');}}>
         <Text style={styles.forgotPassword}>forgot password</Text>
       </TouchableOpacity>
       <ManualButton callback={() => loginHendler({email, password})} text="Login"/>

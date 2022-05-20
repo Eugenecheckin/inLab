@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 
-import Button from './components/Button';
+import Button from '../components/Button';
 
 const styles = StyleSheet.create({
   container: {

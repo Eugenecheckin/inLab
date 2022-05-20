@@ -1,18 +1,5 @@
 import axios from 'axios';
 
-import { REMOTE_PORT } from '../config';
-
-/**
- * @param {{
- * email: string;
- * password: string;
- * }} loginData
- */
-export const postLogin = async (loginData: any) => axios.post(
-  `http://localhost:${REMOTE_PORT}/auth/signin`,
-  loginData,
-);
-
 export const loadPersons = async (url: string) => {
   const {data} = await axios.get(url);
   return data;

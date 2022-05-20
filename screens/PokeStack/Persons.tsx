@@ -9,9 +9,9 @@ import {
   FlatList,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPersonListData } from '../store/pokeApiSlice';
+import { setPersonListData } from '../../store/pokeApiSlice';
 
-import { loadPersons, loadExtendPersonData, loadExtendAbilities } from '../api';
+import { loadPersons, loadExtendPersonData, loadExtendAbilities } from '../../api/pokeApi';
 
 const Item = ({ person }) => (
   <View style={styles.person}>
@@ -62,8 +62,6 @@ const Persons = ({ navigation }) => {
   }[] = [];
 
   const [personData, setPersonData] = useState('');
-
-  const [isVisible, setIsVisible] = useState(false);
   const [update, setUpdate] = useState(0);
 
   const apiLoader = async () => {
@@ -118,39 +116,22 @@ const Persons = ({ navigation }) => {
     }
     personData.length ? setPersonData([...personData, ...personListData]) : setPersonData(personListData);
     await dispatch(setPersonListData(personListData));
-    console.log(personListData);
     setIsVisible(true);
   };
 
   useEffect(() => {
-    setIsVisible(false);
     if (update === 0) {
       setPersonData('');
       personListData = [];
     }
     apiLoader();
     }, [update]);
-
-/*   if (!isVisible) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-      }}
-      >
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  } */
   const loadNextHendler = () => {
     const newUpdate = update + 7;
     setUpdate(newUpdate);
   };
-
   console.log(personListDataRedux);
-  console.log(isNoticed);
+  
   return (
     <View>
       <SafeAreaView style={styles.sectionContainer}>

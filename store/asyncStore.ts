@@ -14,8 +14,10 @@ const storeLoginData = async (value) => {
       'name',
       value.name,
     );
-  } catch (error) {
-    console.log(Error, 'ошибка входа');
+  } catch {
   }
 };
+
 export default storeLoginData;
+
+

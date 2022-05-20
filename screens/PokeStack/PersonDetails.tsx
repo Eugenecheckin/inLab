@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { View, Text, Image, TouchableOpacity, SafeAreaView, FlatList, StyleSheet } from 'react-native';
 import { TabView } from 'react-native-tab-view';
-import Button from './components/Button';
-import { invert } from '../store/pokeApiSlice';
+import Button from '../components/Button';
+import { invert } from '../../store/pokeApiSlice';
 
 const Front = ({ source }) => (
   <Image
