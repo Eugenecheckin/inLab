@@ -64,27 +64,26 @@ const PersonDetails = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-      const { source } = route.params;
       setRoutes([
         {
           key: 'front',
           title: 'Front',
-          source: source.front,
+          source: personData.source.front,
         },
         {
           key: 'back',
           title: 'Back',
-          source: source.back,
+          source: personData.source.back,
         },
         {
           key: 'frontShiny',
           title: 'Front Shiny',
-          source: source.frontShiny,
+          source: personData.source.frontShiny,
         },
         {
           key: 'backShiny',
           title: 'Back Shiny',
-          source: source.backShiny,
+          source: personData.source.backShiny,
         },
       ]);
     }, [route.params]);
@@ -112,9 +111,6 @@ const PersonDetails = ({ navigation, route }) => {
         />
       </SafeAreaView>
       <View style={styles.backToPerson}>
-        <Button navigation={navigation} navigateTo="Persons" text="Back" />
-      </View>
-      <View style={styles.backToPerson}>
         <TouchableOpacity
           style={styles.buttonArrea}
           onPress={isShowHideHandter}>
@@ -122,6 +118,7 @@ const PersonDetails = ({ navigation, route }) => {
             On/Off notice
           </Text>
         </TouchableOpacity>
+        <Button navigation={navigation} navigateTo="Persons" text="Back" />
       </View>
     </View>
   );
@@ -129,9 +126,9 @@ const PersonDetails = ({ navigation, route }) => {
 
 const Item = ({ shortAbility }) => (
   <View >
-    <View>
-      <Text style={styles.personInfo}>11</Text>
-      {/* <FlatList
+    <View >
+      <Text style={styles.personInfo}>Abillity:</Text>
+      <FlatList
         data={shortAbility.flavor}
         renderItem={({item}) => (
           <View style={styles.abillityContainer}>
@@ -148,7 +145,7 @@ const Item = ({ shortAbility }) => (
           </View>
         )}
         keyExtractor={item => item.name}
-      /> */}
+      />
     </View>
   </View>
 );
@@ -171,16 +168,17 @@ const styles = StyleSheet.create({
     marginTop: 35,
   },
   person: {
-    marginTop: 10,
-    marginBottom: 10,
+    flex:2,
+    marginTop: 3,
+    marginBottom: 3,
     width: 150,
     height: 150,
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
   },
   titleText: {
-    flex: 1,
-    paddingHorizontal: 5,
-    paddingVertical: 5,
+    flex: 0.2,
+    paddingHorizontal: 3,
+    paddingVertical: 3,
     textTransform: 'capitalize',
     fontWeight: 'bold',
     alignSelf: 'center',
@@ -189,13 +187,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backToPerson: {
-    flex: 1,
+    flex: 0.5,
     alignSelf: 'center',
   },
   buttonArrea: {
     alignItems: 'center',
     backgroundColor: '#c8c9cd',
-    marginTop: 50,
+    marginTop: 5,
     borderRadius: 50,
   },
   text: {
@@ -205,13 +203,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   sectionContainer: {
-    paddingTop: 15,
+    flex:2,
+    paddingTop: 5,
     marginTop: 0,
     paddingHorizontal: 0,
   },
   personInfo: {
-    width: 20,
-    height: 50,
+    height: 20,
     textTransform: 'capitalize',
     fontWeight: 'bold',
   },
@@ -222,6 +220,12 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   flavorContainer: {
+    margin: 3,
+    padding: 3,
+    backgroundColor: '#7f7f7f',
+    borderRadius: 3,
+  },
+  abillityContainer: {
     margin: 3,
     padding: 3,
     backgroundColor: '#7f7f7f',

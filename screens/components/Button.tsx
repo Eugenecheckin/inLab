@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   buttonArrea: {
     alignItems: 'center',
     backgroundColor: '#c8c9cd',
-    marginTop: 50,
+    marginTop: 5,
     borderRadius: 50,
   },
   text: {

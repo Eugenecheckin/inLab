@@ -144,9 +144,6 @@ const Persons = ({ navigation }) => {
               onPress={() => {
                 navigation.navigate('PersonDetails', {
                   id: item.id,
-                  name: item.name,
-                  shortAbilities: item.shortAbilities,
-                  source: item.source,
                 });
               }}>
               <Item person={item} />

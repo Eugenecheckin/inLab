@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
   },
   backToPerson: {
     flex: 1,
+    marginTop: 35,
     alignSelf: 'center',
   },
 });
