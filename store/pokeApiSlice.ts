@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const pokeApiSlice = createSlice({
   name: 'pokeApi',
@@ -16,9 +16,14 @@ export const pokeApiSlice = createSlice({
     invert: (state) => {
       state.isNoticed = !state.isNoticed;
     },
-    setPersonListData: (state, action) => {
-      console.log('action', action);
-      state.personListData = action.payload;
+    setPersonListData: (state, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        personListData: [
+          ...state.personListData,
+          ...action.payload,
+        ],
+      };
     },
   },
 });

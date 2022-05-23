@@ -12,7 +12,7 @@ const TabBar: React.FC<BottomTabBarProps> = ({ navigation, isNoticed }) => {
           navigation.navigate('Login');
         }}
       >
-        <MaterialCommunityIcons name="login" color="#576270" size={25} />
+        <MaterialCommunityIcons name="logout" color="#576270" size={25} />
       </TouchableOpacity>
       <TouchableOpacity>
         <MaterialCommunityIcons name="comment-multiple-outline" color="#576270" size={25} />

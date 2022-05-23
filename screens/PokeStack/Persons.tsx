@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   FlatList,
 } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPersonListData } from '../../store/pokeApiSlice';
 
@@ -32,6 +33,10 @@ const Item = ({ person }) => (
         )}
         keyExtractor={item => item.name}
       />
+      <View style={styles.textGroupContainer}>
+        <MaterialCommunityIcons name="comment-multiple-outline" color="#576270" size={25} />
+        <Text style={styles.personInfo}>{Math.floor(Math.random() * 100) + 1} Comments</Text>
+      </View>
     </View>
   </View>
 );
@@ -43,7 +48,6 @@ const Abillities = ({ ability }) => (
 
 const Persons = ({ navigation }) => {
   const dispatch = useDispatch();
-  const isNoticed = useSelector((state) => state.pokeApi.isNoticed);
   const personListDataRedux = useSelector((state) => state.pokeApi.personListData);
   let personListData: {
     id: string;
@@ -66,7 +70,7 @@ const Persons = ({ navigation }) => {
 
   const apiLoader = async () => {
     const persons = await loadPersons(
-      `https://pokeapi.co/api/v2/pokemon?limit=7&offset=${update}`,
+      `https://pokeapi.co/api/v2/pokemon?limit=10&offset=${update}`,
     );
     const keys = Object.keys(persons.results);
     for (let k = 0; k < keys.length; k++) {
@@ -126,18 +130,17 @@ const Persons = ({ navigation }) => {
     }
     apiLoader();
     }, [update]);
-  const loadNextHendler = () => {
-    const newUpdate = update + 7;
+    const loadNextHendler = () => {
+    const newUpdate = update + 10;
     setUpdate(newUpdate);
   };
   console.log(personListDataRedux);
-  
   return (
     <View>
       <SafeAreaView style={styles.sectionContainer}>
         <FlatList
           onEndReached={loadNextHendler}
-          data={personData}
+          data={personListDataRedux}
           renderItem={({item}) => (
             <TouchableOpacity
               style={styles.personItemContainer}
@@ -161,6 +164,11 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     marginTop: 0,
     paddingHorizontal: 0,
+  },
+  textGroupContainer: {
+    marginTop: 0,
+    paddingHorizontal: 0,
+    flexDirection: 'row',
   },
   person: {
     backgroundColor: '#ffffff',

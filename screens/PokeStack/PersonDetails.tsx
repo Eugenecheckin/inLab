@@ -1,63 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { View, Text, Image, TouchableOpacity, SafeAreaView, FlatList, StyleSheet } from 'react-native';
-import { TabView } from 'react-native-tab-view';
+
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 import Button from '../components/Button';
 import { invert } from '../../store/pokeApiSlice';
-
-const Front = ({ source }) => (
-  <Image
-    source={{
-      uri: source,
-    }}
-    style={styles.person}
-  />
-);
-const Back = ({ source }) => (
-  <Image
-    source={{
-      uri: source,
-    }}
-    style={styles.person}
-  />
-);
-const FrontShiny = ({ source }) => (
-  <Image
-    source={{
-      uri: source,
-    }}
-    style={styles.person}
-  />
-);
-const BackShiny = ({ source }) => (
-  <Image
-    source={{
-      uri: source,
-    }}
-    style={styles.person}
-  />
-);
-const renderScene = ({ route }) => {
-  switch (route.key) {
-    case 'front':
-      return <Front source={route.source} />;
-    case 'back':
-      return <Back source={route.source} />;
-    case 'frontShiny':
-      return <FrontShiny source={route.source} />;
-    case 'backShiny':
-      return <BackShiny source={route.source} />;
-    default:
-      return null;
-  }
-};
 
 const PersonDetails = ({ navigation, route }) => {
   const isNoticed = useSelector((state) => state.pokeApi.isNoticed);
   const personListData = useSelector((state) => state.pokeApi.personListData);
   const dispatch = useDispatch();
-  const [index, setIndex] = useState(0);
+  // const [index, setIndex] = useState(0);
   const [routes, setRoutes] = useState([]);
+  const [activeSlide, setactiveSlide] = useState(0);
 
   const isShowHideHandter = () => {
     dispatch(invert());
@@ -91,15 +46,60 @@ const PersonDetails = ({ navigation, route }) => {
   const { name } = route.params;
   const personData = personListData.find(el => el.id === route.params.id);
 
-  console.log(isNoticed);
+  const logoItem = ({item, index}) => {
+    return (
+      <View style={styles.screenLayout}>
+          <Image
+            source={{
+              uri: item.source,
+            }}
+            style={styles.person}
+          />
+      </View>
+    );
+  };
+
+  const PokePagination = () => {
+    // const { routes, activeSlide } = this.state;
+    return (
+    <Pagination
+      dotsLength={routes.length}
+      activeDotIndex={activeSlide}
+      containerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.75)', flex: 1 }}
+      dotStyle={{
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        marginHorizontal: 8,
+        backgroundColor: 'rgba(255, 255, 255, 0.92)',
+      }}
+      inactiveDotStyle={{
+        width: 8,
+        height: 8,
+        borderRadius: 5,
+        marginHorizontal: 8,
+        backgroundColor: 'rgba(9, 9, 9, 0.92)',
+      }}
+      inactiveDotOpacity={0.4}
+      inactiveDotScale={0.6}
+    />
+    );
+  };
+
+  // console.log(activeSlide);
   return (
     <View style={styles.screenLayout} >
-      <TabView
-        style={styles.personTabImage}
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
+      <Carousel
+        style={styles.personCarouselImage}
+        data={routes}
+        renderItem={logoItem}
+        sliderWidth={420}
+        itemWidth={190}
+        onSnapToItem={(index) => setactiveSlide({ activeSlide: index }) }
       />
+      <View style={{flex:1}}>
+        {PokePagination}
+      </View>
       <Text style={styles.titleText} >{personData.name}</Text>
       <SafeAreaView style={styles.sectionContainer}>
         <FlatList
@@ -184,6 +184,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   personTabImage: {
+    flex: 1,
+  },
+  personCarouselImage: {
     flex: 1,
   },
   backToPerson: {

@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
+import React, { useState } from 'react';
+import {View, StyleSheet, Dimensions, TouchableOpacity, Text, Image} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 
 import Button from '../components/Button';
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   preview: {
-    flex: 1,
+    flex: 0.4,
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
@@ -38,9 +38,31 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   backToPerson: {
-    flex: 1,
-    marginTop: 35,
+    flex: 0.1,
     alignSelf: 'center',
+  },
+  previewPhoto: {
+    flex: 0.3,
+  },
+  capture: {
+    flex: 0,
+    backgroundColor: '#c8c9cd',
+    borderRadius: 5,
+    padding: 15,
+    paddingHorizontal: 20,
+    alignSelf: 'center',
+    margin: 20,
+  },
+  person: {
+    flex:0,
+    marginTop: 3,
+    marginBottom: 3,
+    width: 150,
+    height: 150,
+    alignSelf: 'center',
+  },
+  textUri: {
+    color: 'white',
   },
 });
 
@@ -48,7 +70,9 @@ class RnCamera extends React.PureComponent {
 
   state = {
     type: RNCamera.Constants.Type.back,
+    photo: '',
   };
+
 
   flipCamera = () =>
     this.setState({
@@ -66,15 +90,14 @@ class RnCamera extends React.PureComponent {
       height: 300,
     };
     const data = await this.camera.takePictureAsync(options);
+    this.setState({photo: data.uri});
   };
 
   render() {
     const {type} = this.state;
+    const {photo} = this.state;
     return (
       <View style={styles.container}>
-        <View style={styles.backToPerson}>
-          <Button navigation={this.props.navigation} navigateTo="Persons" text="Back" />
-        </View>
         <RNCamera
           ref={cam => {
             this.camera = cam;
@@ -82,6 +105,26 @@ class RnCamera extends React.PureComponent {
           type={type}
           style={styles.preview}
         />
+        <View style={{ flex: 0.2, flexDirection: 'row', justifyContent: 'center' }}>
+          <TouchableOpacity onPress={this.takePhoto.bind(this)} style={styles.capture}>
+            <Text style={{ fontSize: 14 }}> SNAP </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.flipCamera.bind(this)} style={styles.capture}>
+            <Text style={{ fontSize: 14 }}> RolCam </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.previewPhoto}>
+          <Text style={styles.textUri}>{photo}</Text>
+          <Image
+            source={{
+            uri: photo,
+          }}
+          style={styles.person}
+          />
+        </View>
+        <View style={styles.backToPerson}>
+          <Button navigation={this.props.navigation} navigateTo="Persons" text="Back" />
+        </View>
       </View>
     );
   }
