@@ -8,9 +8,8 @@ import {
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { confirmEmail } from '../../api/changePassApi';
-import appLogo from '../../img/appLogo.png';
-
 import ManualButton from '../components/ManualButton';
+import appLogo from '../../img/appLogo.png';
 
 type RootStackParamList = {
   ChangeRequest: undefined;
@@ -22,8 +21,6 @@ const EmailConfirm: React.FC<NativeStackScreenProps<RootStackParamList, 'EmailCo
   const [secret, setSecret] = useState('');
 
   const sendControlHendler = async () => {
-    console.log('!!!!!!!!!!!!!!');
-    
     const res = await confirmEmail({ secret });
     if (res.data.email) {
       navigation.navigate('PassConfirm', { secret });

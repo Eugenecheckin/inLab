@@ -8,9 +8,8 @@ import {
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { confirmPass } from '../../api/changePassApi';
-import appLogo from '../../img/appLogo.png';
-
 import ManualButton from '../components/ManualButton';
+import appLogo from '../../img/appLogo.png';
 
 type RootStackParamList = {
   ChangeRequest: undefined;

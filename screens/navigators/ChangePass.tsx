@@ -11,7 +11,7 @@ import PassConfirm from '../ChangePassStack/PassConfirm';
 import { AppStackParamList } from '../../App';
 
 const Stack = createNativeStackNavigator();
-type ScreenNavigationProp = NativeStackNavigationProp<AppStackParamList, 'Persons'>
+type ScreenNavigationProp = NativeStackNavigationProp<AppStackParamList, 'ChangePass'>
 
 const ChangePass = () => {
   const { navigation } = useNavigation<ScreenNavigationProp>();
