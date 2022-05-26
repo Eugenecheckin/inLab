@@ -2,13 +2,16 @@ import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useSelector } from 'react-redux';
+import { removeLoginData } from '../../store/asyncStore';
 
-const TabBar: React.FC<BottomTabBarProps> = ({ navigation, isNoticed }) => {
-  /* const isNoticed = useSelector(({ pokeApi }) => pokeApi.isNoticed); */
+const TabBar: React.FC<BottomTabBarProps> = ({ navigation }) => {
+  const isNoticed = useSelector(({ pokeApi }) => pokeApi.isNoticed);
   return (
     <View style={styles.sectionContainer} >
       <TouchableOpacity
-        onPress={() => {
+        onPress={ async () => {
+          await removeLoginData();
           navigation.navigate('Login');
         }}
       >

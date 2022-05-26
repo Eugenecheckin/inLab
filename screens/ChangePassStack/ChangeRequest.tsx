@@ -12,13 +12,20 @@ import appLogo from '../../img/appLogo.png';
 
 import ManualButton from '../components/ManualButton';
 
-const ChangeRequest: React.FC<NativeStackScreenProps> = ({ navigation }) => {
+type RootStackParamList = {
+  ChangeRequest: undefined;
+  EmailConfirm: {email: string};
+  PassConfirm: { secret: string };
+};
+
+const ChangeRequest: React.FC<NativeStackScreenProps<RootStackParamList,'ChangeRequest'>> = ({ navigation }) => {
 
   const [email, setEmail] = useState('');
 
   const sendControlHendler = async () => {
+    console.log(email);
     navigation.navigate('EmailConfirm', { email });
-    const responce = await forgotPass({ email });
+    await forgotPass({ email });
   };
 
   return (

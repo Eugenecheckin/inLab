@@ -5,11 +5,11 @@ import { REMOTE_PORT } from '../config';
 /**
  * @param {{
  * email: string;
- * }} email
+ * }} data
  */
-export const forgotPass = async (email: string) => axios.post(
+export const forgotPass = async (data: {email: string}) => axios.post(
   `http://localhost:${REMOTE_PORT}/auth/forgotPass`,
-  email,
+  data,
   );
 
 /**

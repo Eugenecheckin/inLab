@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const storeLoginData = async (value) => {
+export const storeLoginData = async (value: {token: string, email: string, name: string}) => {
   try {
     await AsyncStorage.setItem(
       'token',
@@ -18,6 +18,13 @@ const storeLoginData = async (value) => {
   }
 };
 
-export default storeLoginData;
+export const removeLoginData = async () => {
+  try {
+    await AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem('email');
+    await AsyncStorage.removeItem('name');
+  } catch {
+  }
+};
 
 

@@ -12,7 +12,14 @@ import appLogo from '../../img/appLogo.png';
 
 import ManualButton from '../components/ManualButton';
 
-const PassConfirm: React.FC<NativeStackScreenProps> = ({ navigation, route }) => {
+type RootStackParamList = {
+  ChangeRequest: undefined;
+  EmailConfirm: {email: string};
+  PassConfirm: { secret: string };
+  Login: undefined;
+};
+
+const PassConfirm: React.FC<NativeStackScreenProps<RootStackParamList,'PassConfirm'>> = ({ navigation, route }) => {
   const { secret} = route.params;
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -22,7 +29,7 @@ const PassConfirm: React.FC<NativeStackScreenProps> = ({ navigation, route }) =>
       console.log("Entered password don't equal");
     } else {
       const res = await confirmPass({ password, secret });
-      if (res.data.email) {
+      if (res.data.result) {
         navigation.navigate('Login');
       }
     }

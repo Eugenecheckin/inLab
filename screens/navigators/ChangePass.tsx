@@ -5,13 +5,13 @@ import {
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
 
-import ChangeRequest from './ChangeRequest';
-import EmailConfirm from './EmailConfirm';
-import PassConfirm from './PassConfirm';
+import ChangeRequest from '../ChangePassStack/ChangeRequest';
+import EmailConfirm from '../ChangePassStack/EmailConfirm';
+import PassConfirm from '../ChangePassStack/PassConfirm';
 import { AppStackParamList } from '../../App';
 
 const Stack = createNativeStackNavigator();
-type ScreenNavigationProp = NativeStackNavigationProp<AppStackParamList, 'ForgotPass'>
+type ScreenNavigationProp = NativeStackNavigationProp<AppStackParamList, 'Persons'>
 
 const ChangePass = () => {
   const { navigation } = useNavigation<ScreenNavigationProp>();

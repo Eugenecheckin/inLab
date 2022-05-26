@@ -7,14 +7,13 @@ import store from './store/store';
 import RnCamera from './screens/PokeStack/RnCamera';
 import PersonDetails from './screens/PokeStack/PersonDetails';
 import Login from './screens/AccountStack/Login';
-import ChangePass from './screens/ChangePassStack/ChangePass';
+import ChangePass from './screens/navigators/ChangePass';
 import PokeTab from './screens/PokeTabStack/PokeTab';
 
 
 export type AppStackParamList = {
   Login: undefined;
   Persons: undefined;
-  ForgotPass: undefined;
 };
 
 const Stack = createNativeStackNavigator();

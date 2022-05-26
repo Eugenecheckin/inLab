@@ -12,10 +12,18 @@ import appLogo from '../../img/appLogo.png';
 
 import ManualButton from '../components/ManualButton';
 
-const EmailConfirm: React.FC<NativeStackScreenProps> = ({ navigation }) => {
+type RootStackParamList = {
+  ChangeRequest: undefined;
+  EmailConfirm: {email: string};
+  PassConfirm: { secret: string };
+};
+
+const EmailConfirm: React.FC<NativeStackScreenProps<RootStackParamList, 'EmailConfirm'>> = ({ navigation }) => {
   const [secret, setSecret] = useState('');
 
   const sendControlHendler = async () => {
+    console.log('!!!!!!!!!!!!!!');
+    
     const res = await confirmEmail({ secret });
     if (res.data.email) {
       navigation.navigate('PassConfirm', { secret });

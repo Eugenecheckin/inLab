@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { View, Text, Image, TouchableOpacity, SafeAreaView, FlatList, StyleSheet } from 'react-native';
 
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Button from '../components/Button';
 import { invert } from '../../store/pokeApiSlice';
 
 const PersonDetails = ({ navigation, route }) => {
-  const isNoticed = useSelector((state) => state.pokeApi.isNoticed);
-  const personListData = useSelector((state) => state.pokeApi.personListData);
+  const personListData = useSelector(({ pokeApi }) => pokeApi.personListData);
   const dispatch = useDispatch();
   // const [index, setIndex] = useState(0);
   const [routes, setRoutes] = useState([]);
@@ -46,9 +46,9 @@ const PersonDetails = ({ navigation, route }) => {
   const { name } = route.params;
   const personData = personListData.find(el => el.id === route.params.id);
 
-  const logoItem = ({item, index}) => {
+  const logoItem = ({item}) => {
     return (
-      <View style={styles.screenLayout}>
+      <View style={styles.logoContainer}>
           <Image
             source={{
               uri: item.source,
@@ -60,47 +60,42 @@ const PersonDetails = ({ navigation, route }) => {
   };
 
   const PokePagination = () => {
-    // const { routes, activeSlide } = this.state;
     return (
     <Pagination
       dotsLength={routes.length}
       activeDotIndex={activeSlide}
-      containerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.75)', flex: 1 }}
-      dotStyle={{
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        marginHorizontal: 8,
-        backgroundColor: 'rgba(255, 255, 255, 0.92)',
-      }}
-      inactiveDotStyle={{
-        width: 8,
-        height: 8,
-        borderRadius: 5,
-        marginHorizontal: 8,
-        backgroundColor: 'rgba(9, 9, 9, 0.92)',
-      }}
-      inactiveDotOpacity={0.4}
+      dotStyle={styles.dotStyle}
+      inactiveDotStyle={styles.inactiveDotStyle}
+      inactiveDotOpacity={0.6}
       inactiveDotScale={0.6}
     />
     );
   };
 
-  // console.log(activeSlide);
   return (
-    <View style={styles.screenLayout} >
+    <View style={styles.screenContainer} >
       <Carousel
-        style={styles.personCarouselImage}
+        style={styles.carousel}
         data={routes}
         renderItem={logoItem}
         sliderWidth={420}
-        itemWidth={190}
-        onSnapToItem={(index) => setactiveSlide({ activeSlide: index }) }
+        itemWidth={240}
+        onSnapToItem={(index) => setactiveSlide(index) }
       />
-      <View style={{flex:1}}>
-        {PokePagination}
+      {PokePagination()}
+      <View style={styles.viewTitleText}>
+        <Text style={styles.titleText} >{personData.name}</Text>
       </View>
-      <Text style={styles.titleText} >{personData.name}</Text>
+      <View style={styles.like}>
+        <TouchableOpacity
+          style={styles.buttonArrea}
+          onPress={isShowHideHandter}>
+          <MaterialCommunityIcons name="heart" color="#576270" size={25} />
+          <Text style={styles.textLike}>
+            Like!
+          </Text>
+        </TouchableOpacity>
+      </View>
       <SafeAreaView style={styles.sectionContainer}>
         <FlatList
           data={personData.shortAbilities}
@@ -111,13 +106,6 @@ const PersonDetails = ({ navigation, route }) => {
         />
       </SafeAreaView>
       <View style={styles.backToPerson}>
-        <TouchableOpacity
-          style={styles.buttonArrea}
-          onPress={isShowHideHandter}>
-          <Text style={styles.text}>
-            On/Off notice
-          </Text>
-        </TouchableOpacity>
         <Button navigation={navigation} navigateTo="Persons" text="Back" />
       </View>
     </View>
@@ -163,47 +151,29 @@ const Effect = ({ effect }) => (
 );
 
 const styles = StyleSheet.create({
-  screenLayout: {
+  screenContainer: {
     flex: 1,
+    justifyContent: 'flex-start',
+  },
+  logoContainer: {
     marginTop: 35,
+    flex: 1,
   },
-  person: {
-    flex:2,
-    marginTop: 3,
-    marginBottom: 3,
-    width: 150,
-    height: 150,
-    alignSelf: 'center',
+  carousel: {
+    flex: 1,
   },
+  viewTitleText: {
+    flex: 0.3,
+  },
+
   titleText: {
-    flex: 0.2,
-    paddingHorizontal: 3,
-    paddingVertical: 3,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
     textTransform: 'capitalize',
     fontWeight: 'bold',
     alignSelf: 'center',
-  },
-  personTabImage: {
-    flex: 1,
-  },
-  personCarouselImage: {
-    flex: 1,
-  },
-  backToPerson: {
-    flex: 0.5,
-    alignSelf: 'center',
-  },
-  buttonArrea: {
-    alignItems: 'center',
-    backgroundColor: '#c8c9cd',
-    marginTop: 5,
-    borderRadius: 50,
-  },
-  text: {
-    paddingHorizontal: 25,
-    paddingVertical: 5,
-    color: 'white',
-    fontSize: 20,
+    fontSize:20,
+    fontFamily: 'Acme',
   },
   sectionContainer: {
     flex:2,
@@ -211,6 +181,47 @@ const styles = StyleSheet.create({
     marginTop: 0,
     paddingHorizontal: 0,
   },
+  like: {
+    flex: 0.3,
+    alignSelf: 'flex-start',
+  },
+  buttonArrea: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#282e44',
+    marginTop: 5,
+    borderRadius: 5,
+  },
+  textLike: {
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+    color: 'white',
+    fontSize: 20,
+  },
+
+
+
+
+
+
+  person: {
+    flex:1,
+    marginTop: 3,
+    marginBottom: 3,
+    width: 150,
+    height: 150,
+    alignSelf: 'center',
+  },
+  
+  personTabImage: {
+    flex: 1,
+  },
+  
+  backToPerson: {
+    flex: 0.5,
+    alignSelf: 'center',
+  },
+
   personInfo: {
     height: 20,
     textTransform: 'capitalize',
@@ -233,6 +244,18 @@ const styles = StyleSheet.create({
     padding: 3,
     backgroundColor: '#7f7f7f',
     borderRadius: 3,
+  },
+  dotStyle: {
+    width: 6,
+    height: 6,
+    borderRadius: 5,
+    backgroundColor: 'rgba(255, 255, 255, 0.92)',
+  },
+  inactiveDotStyle: {
+    width: 8,
+    height: 8,
+    borderRadius: 5,
+    backgroundColor: 'rgba(9, 9, 9, 0.92)',
   },
 });
 

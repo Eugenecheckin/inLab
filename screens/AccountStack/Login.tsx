@@ -10,7 +10,7 @@ import {
 
 import appLogo from '../../img/appLogo.png';
 import postLogin from '../../api/authApi';
-import storeLoginData from '../../store/asyncStore';
+import { storeLoginData } from '../../store/asyncStore';
 
 import ManualButton from '../components/ManualButton';
 
@@ -22,6 +22,7 @@ const Login = ({ navigation }) => {
   const loginHendler = async (value) => {
     try {
       const responce = await postLogin(value);
+      console.log(responce);
       await storeLoginData(responce.data);
       navigation.navigate('Persons');
     } catch { console.log('babaX'); }
