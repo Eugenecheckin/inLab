@@ -120,7 +120,6 @@ const Persons = ({ navigation }) => {
     }
     personData.length ? setPersonData([...personData, ...personListData]) : setPersonData(personListData);
     await dispatch(setPersonListData(personListData));
-    // setIsVisible(true);
   };
 
   useEffect(() => {
@@ -134,7 +133,6 @@ const Persons = ({ navigation }) => {
     const newUpdate = update + 10;
     setUpdate(newUpdate);
   };
-  console.log(personListDataRedux);
   return (
     <View>
       <SafeAreaView style={styles.sectionContainer}>

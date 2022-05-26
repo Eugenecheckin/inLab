@@ -1,13 +1,13 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Provider } from 'react-redux';
-import store from './store/store';
 
 import Auth from './screens/navigators/Auth';
 import ChangePass from './screens/navigators/ChangePass';
 import Poke from './screens/navigators/Poke';
 
+import store from './store/store';
 
 export type AppStackParamList = {
   Auth: undefined;
@@ -16,7 +16,6 @@ export type AppStackParamList = {
 };
 
 const Stack = createNativeStackNavigator();
-
 
 const App = () => {
   return (

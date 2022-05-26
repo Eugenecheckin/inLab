@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation, getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
@@ -11,20 +11,7 @@ import RnCamera from '../PokeStack/RnCamera';
 import { AppStackParamList } from '../../App';
 
 const Stack = createNativeStackNavigator();
-type ScreenNavigationProp = NativeStackNavigationProp<AppStackParamList, 'Persons'>
-
-function isShowHeaderTitle(route) {
-  const routeName = getFocusedRouteNameFromRoute(route) ?? 'Persons';
-
-  switch (routeName) {
-    case 'Persons':
-      return false;
-    case 'Home':
-      return false;
-    case 'RnCamera':
-      return false;
-  }
-}
+type ScreenNavigationProp = NativeStackNavigationProp<AppStackParamList, 'Poke'>
 
 const Poke = () => {
   const { navigation } = useNavigation<ScreenNavigationProp>();
@@ -33,8 +20,8 @@ const Poke = () => {
       <Stack.Screen
             name="PersonsWithTab"
             component={PokeTab}
-            options={({ route }) => ({
-              headerShown: isShowHeaderTitle(route),
+            options={() => ({
+              headerShown: false,
             })}
           />
           <Stack.Screen name="PersonDetails" component={PersonDetails} options={{ headerShown: false }} />

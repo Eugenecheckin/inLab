@@ -1,8 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useSelector } from 'react-redux';
+
 import { removeLoginData } from '../../store/asyncStore';
 
 const TabBar: React.FC<BottomTabBarProps> = ({ navigation }) => {

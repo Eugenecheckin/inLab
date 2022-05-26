@@ -6,10 +6,11 @@ import {
 } from '@react-navigation/native-stack';
 
 import Login from '../AccountStack/Login';
+
 import { AppStackParamList } from '../../App';
 
 const Stack = createNativeStackNavigator();
-type ScreenNavigationProp = NativeStackNavigationProp<AppStackParamList, 'Poke'>
+type ScreenNavigationProp = NativeStackNavigationProp<AppStackParamList, 'Auth'>
 
 const Auth = () => {
   const { navigation } = useNavigation<ScreenNavigationProp>();

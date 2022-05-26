@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Text, Image, TouchableOpacity, SafeAreaView, FlatList, StyleSheet } from 'react-native';
-
+import { 
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+  FlatList,
+  StyleSheet,
+} from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import Button from '../components/Button';
 import { invert } from '../../store/pokeApiSlice';
 
 const PersonDetails = ({ navigation, route }) => {
   const personListData = useSelector(({ pokeApi }) => pokeApi.personListData);
   const dispatch = useDispatch();
-  // const [index, setIndex] = useState(0);
   const [routes, setRoutes] = useState([]);
   const [activeSlide, setactiveSlide] = useState(0);
 
@@ -43,7 +50,6 @@ const PersonDetails = ({ navigation, route }) => {
       ]);
     }, [route.params]);
 
-  const { name } = route.params;
   const personData = personListData.find(el => el.id === route.params.id);
 
   const logoItem = ({item}) => {
@@ -59,18 +65,43 @@ const PersonDetails = ({ navigation, route }) => {
     );
   };
 
-  const PokePagination = () => {
-    return (
-    <Pagination
-      dotsLength={routes.length}
-      activeDotIndex={activeSlide}
-      dotStyle={styles.dotStyle}
-      inactiveDotStyle={styles.inactiveDotStyle}
-      inactiveDotOpacity={0.6}
-      inactiveDotScale={0.6}
-    />
-    );
-  };
+  const Item = ({ shortAbility }) => (
+    <View >
+      <View >
+        <Text style={styles.personInfo}>Abillity:</Text>
+        <FlatList
+          data={shortAbility.flavor}
+          renderItem={({item}) => (
+            <View style={styles.abillityContainer}>
+              <Flavor flavor={item} />
+            </View>
+          )}
+          keyExtractor={item => item.name}
+        />
+        <FlatList
+          data={shortAbility.effect}
+          renderItem={({item}) => (
+            <View style={styles.effectContainer}>
+              <Effect effect={item} />
+            </View>
+          )}
+          keyExtractor={item => item.name}
+        />
+      </View>
+    </View>
+  );
+
+  const Flavor = ({ flavor }) => (
+    <View>
+      <Text>{flavor}</Text>
+    </View>
+  );
+
+  const Effect = ({ effect }) => (
+    <View>
+      <Text>{effect.effect}</Text>
+    </View>
+  );
 
   return (
     <View style={styles.screenContainer} >
@@ -82,7 +113,14 @@ const PersonDetails = ({ navigation, route }) => {
         itemWidth={240}
         onSnapToItem={(index) => setactiveSlide(index) }
       />
-      {PokePagination()}
+      <Pagination
+        dotsLength={routes.length}
+        activeDotIndex={activeSlide}
+        dotStyle={styles.dotStyle}
+        inactiveDotStyle={styles.inactiveDotStyle}
+        inactiveDotOpacity={0.6}
+        inactiveDotScale={0.6}
+      />
       <View style={styles.viewTitleText}>
         <Text style={styles.titleText} >{personData.name}</Text>
       </View>
@@ -111,44 +149,6 @@ const PersonDetails = ({ navigation, route }) => {
     </View>
   );
 };
-
-const Item = ({ shortAbility }) => (
-  <View >
-    <View >
-      <Text style={styles.personInfo}>Abillity:</Text>
-      <FlatList
-        data={shortAbility.flavor}
-        renderItem={({item}) => (
-          <View style={styles.abillityContainer}>
-            <Flavor flavor={item} />
-          </View>
-        )}
-        keyExtractor={item => item.name}
-      />
-      <FlatList
-        data={shortAbility.effect}
-        renderItem={({item}) => (
-          <View style={styles.effectContainer}>
-            <Effect effect={item} />
-          </View>
-        )}
-        keyExtractor={item => item.name}
-      />
-    </View>
-  </View>
-);
-
-const Flavor = ({ flavor }) => (
-  <View>
-    <Text>{flavor}</Text>
-  </View>
-);
-
-const Effect = ({ effect }) => (
-  <View>
-    <Text>{effect.effect}</Text>
-  </View>
-);
 
 const styles = StyleSheet.create({
   screenContainer: {

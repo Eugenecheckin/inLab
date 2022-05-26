@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import Persons from '../PokeStack/Persons';
 import TabBar from './TabBar';
 
@@ -12,7 +13,6 @@ const PokeTab = ({ navigation }) => {
       await AsyncStorage.getItem('token').then(val => {
         if (val === null) {
           navigation.navigate('Auth');
-        } else { console.log(val);
         }
       });
     } catch {
