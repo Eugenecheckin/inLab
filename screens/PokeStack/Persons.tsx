@@ -120,7 +120,7 @@ const Persons = ({ navigation }) => {
     }
     personData.length ? setPersonData([...personData, ...personListData]) : setPersonData(personListData);
     await dispatch(setPersonListData(personListData));
-    setIsVisible(true);
+    // setIsVisible(true);
   };
 
   useEffect(() => {

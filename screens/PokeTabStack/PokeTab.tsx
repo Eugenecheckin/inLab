@@ -11,7 +11,7 @@ const PokeTab = ({ navigation }) => {
     try {
       await AsyncStorage.getItem('token').then(val => {
         if (val === null) {
-          navigation.navigate('Login');
+          navigation.navigate('Auth');
         } else { console.log(val);
         }
       });

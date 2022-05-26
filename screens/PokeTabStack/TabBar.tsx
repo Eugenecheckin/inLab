@@ -12,7 +12,7 @@ const TabBar: React.FC<BottomTabBarProps> = ({ navigation }) => {
       <TouchableOpacity
         onPress={ async () => {
           await removeLoginData();
-          navigation.navigate('Login');
+          navigation.navigate('Auth');
         }}
       >
         <MaterialCommunityIcons name="logout" color="#576270" size={25} />

@@ -16,7 +16,7 @@ type RootStackParamList = {
   ChangeRequest: undefined;
   EmailConfirm: {email: string};
   PassConfirm: { secret: string };
-  Login: undefined;
+  Auth: undefined;
 };
 
 const PassConfirm: React.FC<NativeStackScreenProps<RootStackParamList,'PassConfirm'>> = ({ navigation, route }) => {
@@ -30,7 +30,7 @@ const PassConfirm: React.FC<NativeStackScreenProps<RootStackParamList,'PassConfi
     } else {
       const res = await confirmPass({ password, secret });
       if (res.data.result) {
-        navigation.navigate('Login');
+        navigation.navigate('Auth');
       }
     }
   };
