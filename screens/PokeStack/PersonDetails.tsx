@@ -18,7 +18,7 @@ import { invert } from '../../store/pokeApiSlice';
 const PersonDetails = ({ navigation, route }) => {
   const personListData = useSelector(({ pokeApi }) => pokeApi.personListData);
   const dispatch = useDispatch();
-  const [routes, setRoutes] = useState([]);
+  const [routes, setRoutes] = useState([{ key: '', title: '', source: ''}]);
   const [activeSlide, setactiveSlide] = useState(0);
 
   const isShowHideHandter = () => {
@@ -65,7 +65,20 @@ const PersonDetails = ({ navigation, route }) => {
     );
   };
 
-  const Item = ({ shortAbility }) => (
+  interface IFlavor {
+    name: string;
+  }
+  interface IEffect {
+    name: string;
+    effect: string;
+  }
+
+  interface IAbility {
+    flavor: Array<IFlavor>,
+    effect: Array<IEffect>,
+  }
+
+  const Item: React.FC<{ shortAbility: IAbility }> = ({ shortAbility }) => (
     <View >
       <View >
         <FlatList
@@ -90,13 +103,13 @@ const PersonDetails = ({ navigation, route }) => {
     </View>
   );
 
-  const Flavor = ({ flavor }) => (
+  const Flavor: React.FC<{ flavor: IFlavor }> = ({ flavor }) => (
     <View>
       <Text style={styles.abilityItemText}>{flavor}</Text>
     </View>
   );
 
-  const Effect = ({ effect }) => (
+  const Effect: React.FC<{ effect: IEffect }> = ({ effect }) => (
     <View>
       <Text style={styles.abilityItemText}>{effect.effect}</Text>
     </View>

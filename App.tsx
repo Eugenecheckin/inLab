@@ -11,7 +11,7 @@ import store from './store/store';
 
 export type AppStackParamList = {
   Auth: undefined;
-  Poke: undefined;
+  Poke: {token: string};
   ChangePass: undefined;
 };
 
