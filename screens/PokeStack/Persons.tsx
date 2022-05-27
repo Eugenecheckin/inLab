@@ -22,7 +22,7 @@ const Item = ({ person }) => (
       }}
       style={styles.personLogo}
     />
-    <View>
+    <View >
       <Text style={styles.personInfo}>{person.name}</Text>
       <FlatList
         data={person.shortAbilities}
@@ -35,14 +35,14 @@ const Item = ({ person }) => (
       />
       <View style={styles.textGroupContainer}>
         <MaterialCommunityIcons name="comment-multiple-outline" color="#576270" size={25} />
-        <Text style={styles.personInfo}>{Math.floor(Math.random() * 100) + 1} Comments</Text>
+        <Text style={styles.comment}>{Math.floor(Math.random() * 100) + 1} Comments</Text>
       </View>
     </View>
   </View>
 );
 const Abillities = ({ ability }) => (
   <View>
-    <Text>{ability.name}</Text>
+    <Text style={styles.abilityText}>{ability.name}</Text>
   </View>
 );
 
@@ -140,15 +140,16 @@ const Persons = ({ navigation }) => {
           onEndReached={loadNextHendler}
           data={personListDataRedux}
           renderItem={({item}) => (
-            <TouchableOpacity
-              style={styles.personItemContainer}
-              onPress={() => {
-                navigation.navigate('PersonDetails', {
-                  id: item.id,
-                });
-              }}>
-              <Item person={item} />
-            </TouchableOpacity>
+            <View style={styles.personItemContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('PersonDetails', {
+                    id: item.id,
+                  });
+                }}>
+                <Item person={item} />
+              </TouchableOpacity>
+            </View>
           )}
           keyExtractor={item => item.id}
         />
@@ -162,9 +163,10 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     marginTop: 0,
     paddingHorizontal: 0,
+    backgroundColor: '#ffffff',
   },
   textGroupContainer: {
-    marginTop: 0,
+    margin: 3,
     paddingHorizontal: 0,
     flexDirection: 'row',
   },
@@ -177,20 +179,32 @@ const styles = StyleSheet.create({
     height: 150,
   },
   personInfo: {
+    margin: 3,
     width: 100,
-    height: 50,
+    height: 40,
+    fontSize: 16,
+    textTransform: 'capitalize',
+    fontWeight: 'bold',
+  },
+  comment: {
+    margin: 3,
+    width: 100,
     textTransform: 'capitalize',
     fontWeight: 'bold',
   },
   personItemContainer: {
-    borderBottomColor: 'gray',
     borderBottomWidth: 1,
+    borderColor: 'rgba(5, 0, 0, .1)',
   },
   abillityContainer: {
     margin: 3,
     padding: 3,
     backgroundColor: '#7f7f7f',
     borderRadius: 3,
+  },
+  abilityText: {
+    color: 'white',
+    alignSelf: 'center',
   },
 });
 

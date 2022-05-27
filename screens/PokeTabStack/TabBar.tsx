@@ -6,6 +6,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { removeLoginData } from '../../store/asyncStore';
 import Out from '../../img/Out.svg';
+import Comment from '../../img/Comment.svg';
+import Magnifier from '../../img/Magnifier.svg';
+import Camera from '../../img/Camera.svg';
 
 const TabBar: React.FC<BottomTabBarProps> = ({ navigation }) => {
   const isNoticed = useSelector(({ pokeApi }) => pokeApi.isNoticed);
@@ -21,17 +24,20 @@ const TabBar: React.FC<BottomTabBarProps> = ({ navigation }) => {
         {/* <MaterialCommunityIcons name="logout" color="#576270" size={25} /> */}
       </TouchableOpacity>
       <TouchableOpacity>
-        <MaterialCommunityIcons name="comment-multiple-outline" color="#576270" size={25} />
+        <Comment width={32} height={32}/>
+        {/* <MaterialCommunityIcons name="comment-multiple-outline" color="#576270" size={25} /> */}
       </TouchableOpacity>
       <TouchableOpacity>
-        <MaterialCommunityIcons name="magnify" color="#576270" size={25} />
+        <Magnifier width={32} height={32}/>
+        {/* <MaterialCommunityIcons name="magnify" color="#576270" size={25} /> */}
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('RnCamera');
         }}
       >
-        <MaterialCommunityIcons name="camera" color="#576270" size={25} />
+        <Camera width={32} height={32}/>
+        {/* <MaterialCommunityIcons name="camera" color="#576270" size={25} /> */}
       </TouchableOpacity>
       <TouchableOpacity>
         {isNoticed ? (
@@ -55,6 +61,8 @@ const styles = StyleSheet.create({
     left: 10,
     right: 10,
     height: 80,
+    borderWidth: 1,
+    borderColor: 'rgba(5, 0, 0, .1)',
     borderRadius: 20,
     paddingTop: 25,
     paddingRight: 10,

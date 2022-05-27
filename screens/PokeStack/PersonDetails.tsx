@@ -68,7 +68,6 @@ const PersonDetails = ({ navigation, route }) => {
   const Item = ({ shortAbility }) => (
     <View >
       <View >
-        <Text style={styles.personInfo}>Abillity:</Text>
         <FlatList
           data={shortAbility.flavor}
           renderItem={({item}) => (
@@ -135,6 +134,7 @@ const PersonDetails = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
       <SafeAreaView style={styles.sectionContainer}>
+        <Text style={styles.personInfo}>Abillity:</Text>
         <FlatList
           data={personData.shortAbilities}
           renderItem={({item}) => (
@@ -181,27 +181,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
   like: {
+    margin: 3,
     flex: 0.3,
     alignSelf: 'flex-start',
   },
   buttonArrea: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#282e44',
+    backgroundColor: 'rgba(5, 0, 0, .1)',
     marginTop: 5,
     borderRadius: 5,
   },
   textLike: {
-    paddingHorizontal: 5,
+    paddingHorizontal: 3,
     paddingVertical: 5,
     color: 'white',
     fontSize: 20,
   },
-
-
-
-
-
 
   person: {
     flex:1,
@@ -211,17 +207,19 @@ const styles = StyleSheet.create({
     height: 150,
     alignSelf: 'center',
   },
-  
+
   personTabImage: {
     flex: 1,
   },
-  
+
   backToPerson: {
     flex: 0.5,
     alignSelf: 'center',
   },
 
   personInfo: {
+    fontSize: 16,
+    margin: 5,
     height: 20,
     textTransform: 'capitalize',
     fontWeight: 'bold',
@@ -229,8 +227,6 @@ const styles = StyleSheet.create({
   effectContainer: {
     margin: 3,
     padding: 3,
-    backgroundColor: '#7f7f7f',
-    borderRadius: 3,
   },
   flavorContainer: {
     margin: 3,
@@ -241,8 +237,6 @@ const styles = StyleSheet.create({
   abillityContainer: {
     margin: 3,
     padding: 3,
-    backgroundColor: '#7f7f7f',
-    borderRadius: 3,
   },
   dotStyle: {
     width: 6,
