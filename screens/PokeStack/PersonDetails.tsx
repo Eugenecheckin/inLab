@@ -92,13 +92,13 @@ const PersonDetails = ({ navigation, route }) => {
 
   const Flavor = ({ flavor }) => (
     <View>
-      <Text>{flavor}</Text>
+      <Text style={styles.abilityItemText}>{flavor}</Text>
     </View>
   );
 
   const Effect = ({ effect }) => (
     <View>
-      <Text>{effect.effect}</Text>
+      <Text style={styles.abilityItemText}>{effect.effect}</Text>
     </View>
   );
   console.log(personData);
@@ -225,11 +225,19 @@ const styles = StyleSheet.create({
   },
 
   personInfo: {
-    fontSize: 16,
+    fontSize: 18,
     margin: 5,
     height: 20,
     textTransform: 'capitalize',
     fontWeight: 'bold',
+    fontFamily: 'Acme-Regular',
+  },
+  abilityItemText: {
+    margin: 3,
+    textTransform: 'capitalize',
+    fontWeight: 'bold',
+    fontFamily: 'Acme-Regular',
+    color: '#7f7f7f',
   },
   effectContainer: {
     margin: 3,
