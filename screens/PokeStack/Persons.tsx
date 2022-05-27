@@ -93,7 +93,7 @@ const Persons = ({ navigation }) => {
             });
             loadedAbility.flavorEntries.forEach((flavor: {}) => {
               if (flavor.language.name === 'en') {
-                parsedFlavor.push(flavor.flavor_text);
+                parsedFlavor.push(`${flavor.flavor_text  }  -  ${  flavor.version_group.name}`);
               }
             });
           }

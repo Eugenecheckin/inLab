@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { 
+import {
   View,
   Text,
   Image,
@@ -101,9 +101,11 @@ const PersonDetails = ({ navigation, route }) => {
       <Text>{effect.effect}</Text>
     </View>
   );
+  console.log(personData);
 
   return (
     <View style={styles.screenContainer} >
+      <View style={styles.carouselView}>
       <Carousel
         style={styles.carousel}
         data={routes}
@@ -112,6 +114,7 @@ const PersonDetails = ({ navigation, route }) => {
         itemWidth={240}
         onSnapToItem={(index) => setactiveSlide(index) }
       />
+      </View>
       <Pagination
         dotsLength={routes.length}
         activeDotIndex={activeSlide}
@@ -161,6 +164,10 @@ const styles = StyleSheet.create({
   },
   carousel: {
     flex: 1,
+  },
+  carouselView: {
+    flex: 1,
+    backgroundColor: 'rgba(216, 216, 216, 1)',
   },
   viewTitleText: {
     flex: 0.3,
