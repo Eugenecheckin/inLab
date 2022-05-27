@@ -11,11 +11,11 @@ import store from './store/store';
 
 export type AppStackParamList = {
   Auth: undefined;
-  Poke: {token: string};
+  Poke: undefined;
   ChangePass: undefined;
 };
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<AppStackParamList>();
 
 const App = () => {
   return (

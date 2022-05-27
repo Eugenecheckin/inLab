@@ -38,4 +38,3 @@ const PokeTab = ({ navigation }) => {
 };
 
 export default PokeTab;
-
