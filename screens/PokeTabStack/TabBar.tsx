@@ -5,6 +5,7 @@ import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { removeLoginData } from '../../store/asyncStore';
+import SignOut from '../../img/SignOut.svg';
 
 const TabBar: React.FC<BottomTabBarProps> = ({ navigation }) => {
   const isNoticed = useSelector(({ pokeApi }) => pokeApi.isNoticed);
@@ -16,7 +17,8 @@ const TabBar: React.FC<BottomTabBarProps> = ({ navigation }) => {
           navigation.navigate('Auth');
         }}
       >
-        <MaterialCommunityIcons name="logout" color="#576270" size={25} />
+        <SignOut width={50} height={50}/>
+        {/* <MaterialCommunityIcons name="logout" color="#576270" size={25} /> */}
       </TouchableOpacity>
       <TouchableOpacity>
         <MaterialCommunityIcons name="comment-multiple-outline" color="#576270" size={25} />

@@ -170,10 +170,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 0,
     textTransform: 'capitalize',
-    fontWeight: 'bold',
     alignSelf: 'center',
-    fontSize:20,
-    fontFamily: 'Acme',
+    fontSize:25,
+    fontFamily: 'Acme-Regular',
   },
   sectionContainer: {
     flex:2,

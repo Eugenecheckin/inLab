@@ -23,7 +23,6 @@ const ChangeRequest: React.FC<NativeStackScreenProps<RootStackParamList,'ChangeR
   const [email, setEmail] = useState('');
 
   const sendControlHendler = async () => {
-    console.log(email);
     navigation.navigate('EmailConfirm', { email });
     await forgotPass({ email });
   };

@@ -22,7 +22,6 @@ const Login = ({ navigation }) => {
   const loginHendler = async (value) => {
     try {
       const responce = await postLogin(value);
-      console.log(responce);
       await storeLoginData(responce.data);
       navigation.navigate('Persons');
     } catch { console.log('babaX'); }
