@@ -28,11 +28,11 @@ const ChangeRequest: React.FC<NativeStackScreenProps<RootStackParamList,'ChangeR
   };
 
   return (
-    <View style={styles.sectionContainer}>
+    <View style={styles.screenContainer}>
       <Image source={appLogo} style={styles.appLogo} />
       <TextInput
         autoCapitalize="none"
-        style={styles.userData}
+        style={styles.enterEmail}
         placeholder="Email"
         onChangeText={newText => setEmail(newText)}
         defaultValue={email}
@@ -43,7 +43,7 @@ const ChangeRequest: React.FC<NativeStackScreenProps<RootStackParamList,'ChangeR
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
+  screenContainer: {
     marginTop: 32,
     paddingHorizontal: 42,
   },
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     height: 150,
     alignSelf: 'center',
   },
-  userData: {
+  enterEmail: {
     marginTop: 10,
     marginBottom: 10,
     padding: 5,
@@ -62,14 +62,6 @@ const styles = StyleSheet.create({
     borderBottomColor: 'gray',
     borderBottomWidth: 2,
     fontSize: 16,
-  },
-  forgotPasswordView: {
-    alignSelf: 'flex-end',
-  },
-  forgotPassword: {
-    alignSelf: 'flex-end',
-    textTransform: 'uppercase',
-    color: 'gray',
   },
 });
 

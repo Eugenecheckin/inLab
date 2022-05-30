@@ -28,11 +28,11 @@ const EmailConfirm: React.FC<NativeStackScreenProps<RootStackParamList, 'EmailCo
   };
 
   return (
-    <View style={styles.sectionContainer}>
+    <View style={styles.screenContainer}>
       <Image source={appLogo} style={styles.appLogo} />
       <TextInput
         autoCapitalize="none"
-        style={styles.userData}
+        style={styles.enterConfirm}
         placeholder="Confirm"
         onChangeText={newText => setSecret(newText)}
         defaultValue={secret}
@@ -43,7 +43,7 @@ const EmailConfirm: React.FC<NativeStackScreenProps<RootStackParamList, 'EmailCo
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
+  screenContainer: {
     marginTop: 32,
     paddingHorizontal: 42,
   },
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     height: 150,
     alignSelf: 'center',
   },
-  userData: {
+  enterConfirm: {
     marginTop: 10,
     marginBottom: 10,
     padding: 5,
@@ -62,14 +62,6 @@ const styles = StyleSheet.create({
     borderBottomColor: 'gray',
     borderBottomWidth: 2,
     fontSize: 16,
-  },
-  forgotPasswordView: {
-    alignSelf: 'flex-end',
-  },
-  forgotPassword: {
-    alignSelf: 'flex-end',
-    textTransform: 'uppercase',
-    color: 'gray',
   },
 });
 

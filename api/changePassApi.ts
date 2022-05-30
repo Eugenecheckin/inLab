@@ -1,14 +1,15 @@
 import axios from 'axios';
-
+import { Platform } from 'react-native';
 import { REMOTE_PORT } from '../config';
 
+const host = (Platform.OS === 'android') ? '10.0.2.2' : 'localhost';
 /**
  * @param {{
  * email: string;
  * }} data
  */
 export const forgotPass = async (data: {email: string}) => axios.post(
-  `http://localhost:${REMOTE_PORT}/auth/forgotPass`,
+  `http://${host}:${REMOTE_PORT}/auth/forgotPass`,
   data,
   );
 
@@ -18,7 +19,7 @@ export const forgotPass = async (data: {email: string}) => axios.post(
  * }} data
  */
 export const confirmEmail = async (data: { secret:string }) => axios.post(
-  `http://localhost:${REMOTE_PORT}/auth/confirmEmail`,
+  `http://${host}:${REMOTE_PORT}/auth/confirmEmail`,
   data,
   );
 
@@ -29,7 +30,7 @@ export const confirmEmail = async (data: { secret:string }) => axios.post(
  * }} data
  */
   export const confirmPass = async (data: { password:string, secret: string }) => axios.post(
-    `http://localhost:${REMOTE_PORT}/auth/confirmPass`,
+    `http://${host}:${REMOTE_PORT}/auth/confirmPass`,
     data,
     );
 

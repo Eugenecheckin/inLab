@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import appLogo from '../../img/appLogo.png';
 import postLogin from '../../api/authApi';
@@ -14,12 +15,20 @@ import { storeLoginData } from '../../store/asyncStore';
 
 import ManualButton from '../components/ManualButton';
 
-const Login = ({ navigation }) => {
+type RootStackParamList = {
+  Login: undefined;
+  Persons: undefined;
+}
+const Login: React.FC<NativeStackScreenProps<RootStackParamList,'Login'>> = ({ navigation }) => {
 
   const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const loginHendler = async (value) => {
+  interface ILoginData {
+    email: string;
+    password: string;
+  }
+  const loginHendler = async (value: ILoginData) => {
     try {
       const responce = await postLogin(value);
       await storeLoginData(responce.data);
@@ -44,8 +53,8 @@ const Login = ({ navigation }) => {
         onChangeText={newText => setPassword(newText)}
         defaultValue={password}
       />
-      <TouchableOpacity style={styles.forgotPasswordView} onPress={() => {navigation.navigate('ChangePass');}}>
-        <Text style={styles.forgotPassword}>forgot password</Text>
+      <TouchableOpacity style={styles.touchFogotPass} onPress={() => {navigation.navigate('ChangePass');}}>
+        <Text style={styles.textForgotPass}>forgot password</Text>
       </TouchableOpacity>
       <ManualButton callback={() => loginHendler({email, password})} text="Login"/>
     </View>
@@ -73,11 +82,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     fontSize: 16,
   },
-  forgotPasswordView: {
+  touchFogotPass: {
     alignSelf: 'flex-end',
   },
-  forgotPassword: {
-    alignSelf: 'flex-end',
+  textForgotPass: {
     textTransform: 'uppercase',
     color: 'gray',
   },

@@ -9,13 +9,20 @@ import {
   FlatList,
   StyleSheet,
 } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Button from '../components/Button';
 import { invert } from '../../store/pokeApiSlice';
 
-const PersonDetails = ({ navigation, route }) => {
+type RootStackParamList = {
+  Persons: undefined;
+  PersonDetails: {id: string};
+  RnCamera: undefined;
+}
+
+const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'PersonDetails'>> = ({ navigation, route }) => {
   const personListData = useSelector(({ pokeApi }) => pokeApi.personListData);
   const dispatch = useDispatch();
   const [routes, setRoutes] = useState([{ key: '', title: '', source: ''}]);
@@ -48,11 +55,15 @@ const PersonDetails = ({ navigation, route }) => {
           source: personData.source.backShiny,
         },
       ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [route.params]);
 
   const personData = personListData.find(el => el.id === route.params.id);
 
-  const logoItem = ({item}) => {
+  interface ILogo {
+    source: string;
+  }
+  const logoItem: React.FC<{item: ILogo}> = ({item}) => {
     return (
       <View style={styles.logoContainer}>
           <Image
@@ -88,7 +99,7 @@ const PersonDetails = ({ navigation, route }) => {
               <Flavor flavor={item} />
             </View>
           )}
-          keyExtractor={item => item.name}
+          keyExtractor={item => `${item}-flavor`}
         />
         <FlatList
           data={shortAbility.effect}
@@ -97,7 +108,7 @@ const PersonDetails = ({ navigation, route }) => {
               <Effect effect={item} />
             </View>
           )}
-          keyExtractor={item => item.name}
+          keyExtractor={item => `${item}-effect`}
         />
       </View>
     </View>
