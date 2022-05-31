@@ -12,6 +12,7 @@ import {
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AbilityDetails from './components/AbilityDetails';
 
 import Button from '../../ui/components/Button';
 import { invert } from '../../store/pokeApiSlice';
@@ -76,56 +77,6 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
     );
   };
 
-  interface IFlavor {
-    name: string;
-  }
-  interface IEffect {
-    name: string;
-    effect: string;
-  }
-
-  interface IAbility {
-    flavor: Array<IFlavor>,
-    effect: Array<IEffect>,
-  }
-
-  const Item: React.FC<{ shortAbility: IAbility }> = ({ shortAbility }) => (
-    <View >
-      <View >
-        <FlatList
-          data={shortAbility.flavor}
-          renderItem={({item}) => (
-            <View style={styles.abillityContainer}>
-              <Flavor flavor={item} />
-            </View>
-          )}
-          keyExtractor={item => `${item}-flavor`}
-        />
-        <FlatList
-          data={shortAbility.effect}
-          renderItem={({item}) => (
-            <View style={styles.effectContainer}>
-              <Effect effect={item} />
-            </View>
-          )}
-          keyExtractor={item => `${item}-effect`}
-        />
-      </View>
-    </View>
-  );
-
-  const Flavor: React.FC<{ flavor: IFlavor }> = ({ flavor }) => (
-    <View>
-      <Text style={styles.abilityItemText}>{flavor}</Text>
-    </View>
-  );
-
-  const Effect: React.FC<{ effect: IEffect }> = ({ effect }) => (
-    <View>
-      <Text style={styles.abilityItemText}>{effect.effect}</Text>
-    </View>
-  );
-
   const onPressButton = () => {
     navigation.navigate('Persons');
   };
@@ -169,7 +120,7 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
         <FlatList
           data={personData.shortAbilities}
           renderItem={({item}) => (
-              <Item shortAbility={item} />
+              <AbilityDetails shortAbility={item} />
           )}
           keyExtractor={item => item.id}
         />
@@ -263,27 +214,6 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
     fontWeight: 'bold',
     fontFamily: 'Acme-Regular',
-  },
-  abilityItemText: {
-    margin: 3,
-    textTransform: 'capitalize',
-    fontWeight: 'bold',
-    fontFamily: 'Acme-Regular',
-    color: '#7f7f7f',
-  },
-  effectContainer: {
-    margin: 3,
-    padding: 3,
-  },
-  flavorContainer: {
-    margin: 3,
-    padding: 3,
-    backgroundColor: '#7f7f7f',
-    borderRadius: 3,
-  },
-  abillityContainer: {
-    margin: 3,
-    padding: 3,
   },
   dotStyle: {
     width: 6,
