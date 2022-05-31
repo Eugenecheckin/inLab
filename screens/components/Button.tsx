@@ -5,7 +5,8 @@ import {
   StyleSheet,
 } from 'react-native';
 
-const Button = ({ navigation, navigateTo, text }) => {
+
+const Button: React.FC<{ navigateTo: string, text: string, navigation: any}>  = ({ navigation, navigateTo, text }) => {
   return (
     <TouchableOpacity
       style={styles.buttonArrea}

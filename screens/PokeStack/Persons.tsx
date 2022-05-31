@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -157,6 +158,7 @@ const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = 
         <FlatList
           onEndReached={loadNextHendler}
           data={personListDataRedux}
+          ListFooterComponent={<ActivityIndicator size="large" style={styles.footerList} />}
           renderItem={({item}) => (
             <View style={styles.personItemContainer}>
               <TouchableOpacity
@@ -228,7 +230,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'rgba(5, 0, 0, .1)',
   },
-
+  footerList: {
+    paddingBottom: 70,
+  }
 });
 
 export default Persons;

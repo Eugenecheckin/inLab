@@ -5,7 +5,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-const ManualButton = ({ text, callback }) => {
+const ManualButton: React.FC<{text: string, callback: void}> = ({ text, callback }) => {
   return (
     <TouchableOpacity
       style={styles.buttonArrea}

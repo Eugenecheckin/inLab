@@ -221,6 +221,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(5, 0, 0, .1)',
     marginTop: 5,
+    marginLeft:2,
     borderRadius: 5,
   },
   textLike: {
