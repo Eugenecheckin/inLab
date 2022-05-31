@@ -5,13 +5,13 @@ import {
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
 
-import ChangeRequest from '../ChangePassStack/ChangeRequest';
-import EmailConfirm from '../ChangePassStack/EmailConfirm';
-import PassConfirm from '../ChangePassStack/PassConfirm';
-import { AppStackParamList } from '../../App';
+import ChangeRequest from '../screens/ChangePass/ChangeRequest';
+import EmailConfirm from '../screens/ChangePass/EmailConfirm';
+import PassConfirm from '../screens/ChangePass/PassConfirm';
+import { RootStackParamList } from './RootNavigator';
 
 const Stack = createNativeStackNavigator();
-type ScreenNavigationProp = NativeStackNavigationProp<AppStackParamList, 'ChangePass'>
+type ScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ChangePass'>
 
 const ChangePass = () => {
   const { navigation } = useNavigation<ScreenNavigationProp>();

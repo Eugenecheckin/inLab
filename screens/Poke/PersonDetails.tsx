@@ -13,7 +13,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import Button from '../components/Button';
+import Button from '../../ui/components/Button';
 import { invert } from '../../store/pokeApiSlice';
 
 type RootStackParamList = {
@@ -125,6 +125,10 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
       <Text style={styles.abilityItemText}>{effect.effect}</Text>
     </View>
   );
+
+  const onPressButton = () => {
+    navigation.navigate('Persons');
+  };
   console.log(personData);
 
   return (
@@ -171,7 +175,10 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
         />
       </SafeAreaView>
       <View style={styles.backToPerson}>
-        <Button navigation={navigation} navigateTo="Persons" text="Back" />
+        <Button
+          onPress={onPressButton}
+          text="Back"
+        />
       </View>
     </View>
   );

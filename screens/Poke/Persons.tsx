@@ -231,6 +231,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(5, 0, 0, .1)',
   },
   footerList: {
+    paddingTop: 5,
     paddingBottom: 70,
   }
 });

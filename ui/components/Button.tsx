@@ -1,20 +1,26 @@
 import React from 'react';
 import {
+  View,
   Text,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
 
-
-const Button: React.FC<{ navigateTo: string, text: string, navigation: any}>  = ({ navigation, navigateTo, text }) => {
+type Props = {
+  onPress?: ()=>void,
+  text: string
+}
+const Button = ({ onPress, text }: Props) => {
   return (
-    <TouchableOpacity
-      style={styles.buttonArrea}
-      onPress={() => navigation.navigate(navigateTo)}>
-      <Text style={styles.text}>
-        {text}
-      </Text>
-    </TouchableOpacity>
+    <View>
+      {onPress && (<TouchableOpacity
+        style={styles.buttonArrea}
+        onPress={onPress}>
+        <Text style={styles.text}>
+          {text}
+        </Text>
+      </TouchableOpacity>)}
+    </View>
   );
 };
 

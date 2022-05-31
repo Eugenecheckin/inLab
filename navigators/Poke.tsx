@@ -5,13 +5,13 @@ import {
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
 
-import PersonDetails from '../PokeStack/PersonDetails';
-import PokeTab from '../PokeTabStack/PokeTab';
-import RnCamera from '../PokeStack/RnCamera';
-import { AppStackParamList } from '../../App';
+import PersonDetails from '../screens/Poke/PersonDetails';
+import PokeTab from './PokeTab';
+import RnCamera from '../screens/Poke/RnCamera';
+import { RootStackParamList } from './RootNavigator';
 
 const Stack = createNativeStackNavigator();
-type ScreenNavigationProp = NativeStackNavigationProp<AppStackParamList, 'Poke'>
+type ScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Poke'>
 
 const Poke = () => {
   const { navigation } = useNavigation<ScreenNavigationProp>();

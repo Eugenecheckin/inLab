@@ -5,12 +5,11 @@ import {
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
 
-import Login from '../AccountStack/Login';
-
-import { AppStackParamList } from '../../App';
+import Login from '../screens/Account/Login';
+import { RootStackParamList } from './RootNavigator';
 
 const Stack = createNativeStackNavigator();
-type ScreenNavigationProp = NativeStackNavigationProp<AppStackParamList, 'Auth'>
+type ScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Auth'>
 
 const Auth = () => {
   const { navigation } = useNavigation<ScreenNavigationProp>();

@@ -9,9 +9,13 @@ import {
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
 
-import Button from '../components/Button';
+import Button from '../../ui/components/Button';
 
 class RnCamera extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.onPressButton = this.onPressButton.bind(this);
+  }
 
   state = {
     type: RNCamera.Constants.Type.back,
@@ -36,6 +40,10 @@ class RnCamera extends React.PureComponent {
     const data = await this.camera.takePictureAsync(options);
     this.setState({photo: data.uri});
   };
+
+  onPressButton = () => {
+    this.props.navigation.navigate('Persons');
+  }
 
   render() {
     const {type} = this.state;
@@ -67,7 +75,10 @@ class RnCamera extends React.PureComponent {
           />
         </View>
         <View style={styles.backToPerson}>
-          <Button navigation={this.props.navigation} navigateTo="Persons" text="Back" />
+          <Button
+            onPress={this.onPressButton}
+            text="Back"
+          />
         </View>
       </View>
     );

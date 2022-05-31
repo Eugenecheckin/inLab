@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import Persons from '../PokeStack/Persons';
-import TabBar from './TabBar';
+import Persons from '../screens/Poke/Persons';
+import TabBar from '../screens/PokeTab/TabBar';
 
 const Tab = createBottomTabNavigator();
 

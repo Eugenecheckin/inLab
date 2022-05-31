@@ -7,9 +7,8 @@ import {
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { forgotPass } from '../../api/changePassApi';
-import ManualButton from '../components/ManualButton';
-
+import { confirmEmail } from '../../api/changePassApi';
+import ManualButton from '../../ui/components/ManualButton';
 import appLogo from '../../img/appLogo.png';
 
 type RootStackParamList = {
@@ -18,13 +17,14 @@ type RootStackParamList = {
   PassConfirm: { secret: string };
 };
 
-const ChangeRequest: React.FC<NativeStackScreenProps<RootStackParamList,'ChangeRequest'>> = ({ navigation }) => {
-
-  const [email, setEmail] = useState('');
+const EmailConfirm: React.FC<NativeStackScreenProps<RootStackParamList, 'EmailConfirm'>> = ({ navigation }) => {
+  const [secret, setSecret] = useState('');
 
   const sendControlHendler = async () => {
-    navigation.navigate('EmailConfirm', { email });
-    await forgotPass({ email });
+    const res = await confirmEmail({ secret });
+    if (res.data.email) {
+      navigation.navigate('PassConfirm', { secret });
+    }
   };
 
   return (
@@ -32,12 +32,12 @@ const ChangeRequest: React.FC<NativeStackScreenProps<RootStackParamList,'ChangeR
       <Image source={appLogo} style={styles.appLogo} />
       <TextInput
         autoCapitalize="none"
-        style={styles.enterEmail}
-        placeholder="Email"
-        onChangeText={newText => setEmail(newText)}
-        defaultValue={email}
+        style={styles.enterConfirm}
+        placeholder="Confirm"
+        onChangeText={newText => setSecret(newText)}
+        defaultValue={secret}
       />
-      <ManualButton callback={sendControlHendler} text="send control to email"/>
+      <ManualButton callback={sendControlHendler} text="Enter confirm"/>
     </View>
   );
 };
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     height: 150,
     alignSelf: 'center',
   },
-  enterEmail: {
+  enterConfirm: {
     marginTop: 10,
     marginBottom: 10,
     padding: 5,
@@ -65,4 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChangeRequest;
+export default EmailConfirm;

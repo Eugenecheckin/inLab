@@ -13,11 +13,12 @@ import appLogo from '../../img/appLogo.png';
 import postLogin from '../../api/authApi';
 import { storeLoginData } from '../../store/asyncStore';
 
-import ManualButton from '../components/ManualButton';
+import ManualButton from '../../ui/components/ManualButton';
 
 type RootStackParamList = {
   Login: undefined;
   Persons: undefined;
+  ChangePass: undefined;
 }
 const Login: React.FC<NativeStackScreenProps<RootStackParamList,'Login'>> = ({ navigation }) => {
 
