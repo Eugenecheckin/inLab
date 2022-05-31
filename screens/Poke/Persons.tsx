@@ -29,7 +29,7 @@ const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = 
     const newUpdate = update + 10;
     setUpdate(newUpdate);
   };
-  console.log(personListDataRedux);
+  // console.log(personListDataRedux);
 
   return (
     <View>
