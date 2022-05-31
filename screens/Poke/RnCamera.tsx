@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  Dimensions,
   TouchableOpacity,
   Text,
   Image,
@@ -96,27 +95,6 @@ const styles = StyleSheet.create({
     flex: 0.4,
     justifyContent: 'flex-end',
     alignItems: 'center',
-  },
-  topButtons: {
-    flex: 1,
-    width: Dimensions.get('window').width,
-    alignItems: 'flex-start',
-  },
-  bottomButtons: {
-    flex: 1,
-    width: Dimensions.get('window').width,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-
-  flipButton: {
-    flex: 1,
-    marginTop: 20,
-    right: 20,
-    alignSelf: 'flex-end',
-  },
-  recordingButton: {
-    marginBottom: 10,
   },
   backToPerson: {
     flex: 0.1,
