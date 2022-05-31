@@ -56,7 +56,7 @@ class RnCamera extends React.PureComponent {
           type={type}
           style={styles.preview}
         />
-        <View style={{ flex: 0.2, flexDirection: 'row', justifyContent: 'center' }}>
+        <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={this.takePhoto.bind(this)} style={styles.capture}>
             <Text style={{ fontSize: 14 }}> SNAP </Text>
           </TouchableOpacity>
@@ -102,6 +102,11 @@ const styles = StyleSheet.create({
   },
   previewPhoto: {
     flex: 0.3,
+  },
+  buttonContainer: {
+    flex: 0.2,
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   capture: {
     flex: 0,
