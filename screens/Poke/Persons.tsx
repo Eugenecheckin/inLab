@@ -35,9 +35,10 @@ const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = 
     <View>
       <SafeAreaView style={styles.screenContainer}>
         <FlatList
+          contentContainerStyle={styles.footerList}
           onEndReached={loadNextHendler}
           data={personListDataRedux}
-          ListFooterComponent={<ActivityIndicator size="large" style={styles.footerList} />}
+          ListFooterComponent={<ActivityIndicator size="large" />}
           renderItem={({item}) => (
             <View style={styles.personItemContainer}>
               <TouchableOpacity
@@ -70,8 +71,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(5, 0, 0, .1)',
   },
   footerList: {
-    paddingTop: 5,
-    paddingBottom: 70,
+    paddingBottom: 110,
   },
 });
 

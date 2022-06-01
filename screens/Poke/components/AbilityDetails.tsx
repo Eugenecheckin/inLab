@@ -33,7 +33,7 @@ const AbilityDetails: React.FC<{ shortAbility: IAbility, ind: number }> = ({ sho
         keyExtractor={item => `${item}-flavor`}
       />
       <FlatList
-        style={styles.testBorder}
+        // style={styles.testBorder}
         data={shortAbility.effect}
         renderItem={({item}) => (
           <View style={styles.effectContainer}>
@@ -60,10 +60,10 @@ const Effect: React.FC<{ effect: IEffect }> = ({ effect }) => (
 );
 
 const styles = StyleSheet.create({
-  testBorder: {
+  /* testBorder: {
     borderWidth: 1,
     borderColor: 'black',
-  },
+  }, */
   abilityItemText: {
     margin: 3,
     textTransform: 'capitalize',
