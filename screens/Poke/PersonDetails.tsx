@@ -80,7 +80,7 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
   const onPressButton = () => {
     navigation.navigate('Persons');
   };
-  // console.log(personData);
+  console.log(personData);
 
   return (
     <View style={styles.screenContainer} >
