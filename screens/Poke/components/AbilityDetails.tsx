@@ -19,7 +19,7 @@ interface IAbility {
   effect: Array<IEffect>,
 }
 
-const AbilityDetails: React.FC<{ shortAbility: IAbility }> = ({ shortAbility }) => (
+const AbilityDetails: React.FC<{ shortAbility: IAbility, ind: number }> = ({ shortAbility, ind }) => (
   <View >
     <View >
       <FlatList
@@ -29,6 +29,7 @@ const AbilityDetails: React.FC<{ shortAbility: IAbility }> = ({ shortAbility }) 
             <Flavor flavor={item} />
           </View>
         )}
+        listKey={`${ind.toString()}-flavor`}
         keyExtractor={item => `${item}-flavor`}
       />
       <FlatList
@@ -39,6 +40,7 @@ const AbilityDetails: React.FC<{ shortAbility: IAbility }> = ({ shortAbility }) 
             <Effect effect={item} />
           </View>
         )}
+        listKey={ind.toString()}
         keyExtractor={ ({effect}) => `${effect}-effect`}
       />
     </View>

@@ -119,8 +119,8 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
         <Text style={styles.personInfo}>Abillity:</Text>
         <FlatList
           data={personData.shortAbilities}
-          renderItem={({item}) => (
-              <AbilityDetails shortAbility={item} />
+          renderItem={({item, index}) => (
+              <AbilityDetails shortAbility={item} ind={index} />
           )}
           keyExtractor={item => item.id}
         />
