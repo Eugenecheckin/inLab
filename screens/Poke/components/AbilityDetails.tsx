@@ -21,7 +21,6 @@ interface IAbility {
 
 const AbilityDetails: React.FC<{ shortAbility: IAbility, ind: number }> = ({ shortAbility, ind }) => (
   <View >
-    <View >
       <FlatList
         data={shortAbility.flavor}
         renderItem={({item}) => (
@@ -43,7 +42,6 @@ const AbilityDetails: React.FC<{ shortAbility: IAbility, ind: number }> = ({ sho
         listKey={ind.toString()}
         keyExtractor={ ({effect}) => `${effect}-effect`}
       />
-    </View>
   </View>
 );
 
