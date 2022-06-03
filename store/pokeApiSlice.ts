@@ -5,6 +5,9 @@ export const pokeApiSlice = createSlice({
   initialState: {
     isNoticed: false,
     personListData: [],
+    filter: {
+      ability: '',
+    },
   },
   reducers: {
     show: (state) => {
@@ -25,9 +28,25 @@ export const pokeApiSlice = createSlice({
         ],
       };
     },
+    clearFilter: (state) => {
+      return {
+        ...state,
+        filter: {
+          ability: '',
+        },
+      };
+    },
+    setFilter: (state, action) => {
+      return {
+        ...state,
+        filter: {
+          ability: action.payload,
+        },
+      };
+    },
   },
 });
 
-export const { show, hide, invert, setPersonListData } = pokeApiSlice.actions;
+export const { show, hide, invert, setPersonListData, setFilter, clearFilter } = pokeApiSlice.actions;
 
 export default pokeApiSlice.reducer;

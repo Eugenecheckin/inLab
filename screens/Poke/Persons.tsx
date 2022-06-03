@@ -11,6 +11,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useDispatch, useSelector } from 'react-redux';
 import PersonInfo from './components/PersonInfo';
 import pokeLoader from '../../store/thunk';
+import FilterDrawer from './components/FilterDrawer';
 
 type RootStackParamList = {
   Persons: undefined;
@@ -19,7 +20,23 @@ type RootStackParamList = {
 }
 const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = ({ navigation }) => {
   const dispatch = useDispatch();
-  const personListDataRedux = useSelector((state) => state.pokeApi.personListData);
+  const filter = useSelector((state) => state.pokeApi.filter);
+  const personListDataRedux: [] = useSelector((state) => state.pokeApi.personListData);
+  interface IAbility {
+    name: string;
+  }
+  interface IPerson {
+    shortAbilities: Array<IAbility>,
+  }
+  const hasAbility = (person: IPerson) : boolean  => {
+    const result = person.shortAbilities.find((item) => {
+      item.name === filter.ability;
+    });
+    return !!result;
+  };
+  const filteredPersons = personListDataRedux.find((person) => {
+    return hasAbility(person);
+  });
   const [update, setUpdate] = useState(0);
 
   useEffect(() => {
@@ -29,7 +46,8 @@ const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = 
     const newUpdate = update + 10;
     setUpdate(newUpdate);
   };
-  // console.log(personListDataRedux);
+  console.log(filteredPersons);
+  console.log(filter);
 
   return (
     <View>
@@ -54,6 +72,7 @@ const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = 
           keyExtractor={item => item.id}
         />
       </SafeAreaView>
+      <FilterDrawer />
     </View>
   );
 };

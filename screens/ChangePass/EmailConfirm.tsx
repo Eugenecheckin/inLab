@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   enterConfirm: {
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 60,
     padding: 5,
     height: 40,
     borderBottomColor: 'gray',

@@ -19,14 +19,13 @@ const ManualButton: React.FC<{text: string, callback: void}> = ({ text, callback
 
 const styles = StyleSheet.create({
   buttonArrea: {
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#c8c9cd',
-    marginTop: 50,
     borderRadius: 50,
+    height: 36,
   },
   text: {
-    paddingHorizontal: 25,
-    paddingVertical: 5,
     color: 'white',
     fontSize: 20,
   },

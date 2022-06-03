@@ -6547,10 +6547,10 @@
     "jscodeshift" "^0.13.1"
     "nullthrows" "^1.1.1"
 
-"react-native-gesture-handler@>= 1.0.0":
-  "integrity" "sha512-qJHkZAWyuvZvEm8jV6TsYKeTgkYmoNsKrO/CEx0YaisAcHSiaiMx2Dy/0/QQ7oZr3t5aL4rJqWtOEZCADNbfeQ=="
-  "resolved" "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.4.1.tgz"
-  "version" "2.4.1"
+"react-native-gesture-handler@^2.4.2", "react-native-gesture-handler@>= 1.0.0":
+  "integrity" "sha512-K3oMiQV7NOVB5RvNlxkyJxU1Gn6m1cYu53MoFA542FVDSTR491d1eQkWDdqy4lW52rfF7IK7eE1LCi+kTJx7jw=="
+  "resolved" "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.4.2.tgz"
+  "version" "2.4.2"
   dependencies:
     "@egjs/hammerjs" "^2.0.17"
     "hoist-non-react-statics" "^3.3.0"
@@ -6568,7 +6568,7 @@
   "resolved" "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-5.4.15.tgz"
   "version" "5.4.15"
 
-"react-native-reanimated@>= 1.0.0":
+"react-native-reanimated@^2.8.0", "react-native-reanimated@>= 1.0.0":
   "integrity" "sha512-kJvf/UWLBMaGCs9X66MKq5zdFMgwx8D0nHnolbHR7s8ZnbLdb7TlQ/yuzIXqn/9wABfnwtNRI3CyaP1aHWMmZg=="
   "resolved" "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-2.8.0.tgz"
   "version" "2.8.0"

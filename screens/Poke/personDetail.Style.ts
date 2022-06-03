@@ -13,11 +13,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   carouselView: {
-    flex: 1,
+    flex: 4,
     backgroundColor: 'rgba(216, 216, 216, 1)',
   },
   viewTitleText: {
-    flex: 0.3,
+    flex: 1,
   },
 
   titleText: {
@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Acme-Regular',
   },
   sectionContainer: {
-    flex:2,
+    flex:5,
     paddingTop: 5,
     marginTop: 0,
     paddingHorizontal: 0,
   },
   like: {
     margin: 3,
-    flex: 0.3,
+    flex: 1,
     alignSelf: 'flex-start',
   },
   buttonArrea: {
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
 
   backToPerson: {
-    flex: 0.5,
+    flex: 1,
     alignSelf: 'center',
   },
 

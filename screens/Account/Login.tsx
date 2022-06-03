@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
   },
   touchFogotPass: {
     alignSelf: 'flex-end',
+    marginBottom: 50,
   },
   textForgotPass: {
     textTransform: 'uppercase',

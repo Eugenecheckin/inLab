@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Persons from '../screens/Poke/Persons';
 import TabBar from '../screens/PokeTab/TabBar';
+import PersonsTitle from './components/PersonsTitle';
 
 const Tab = createBottomTabNavigator();
 
@@ -32,6 +33,7 @@ const PokeTab = ({ navigation }) => {
       <Tab.Screen
         name="Persons"
         component={Persons}
+        options={{ headerTitle: (props) => <PersonsTitle {...props} /> }}
       />
     </Tab.Navigator>
   );
