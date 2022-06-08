@@ -38,7 +38,7 @@ export const getFilteredList = createAsyncThunk(
   },
 );
 
-type PersonList = {
+type PersonsList = {
   id: string;
   name: string;
   shortAbilities: {
@@ -57,9 +57,8 @@ const imageUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
 export const pokeLoader = createAsyncThunk(
   'getPokes',
   async (ofset: number, {dispatch, getState}) => {
-    const personListData: PersonList = [];
-
-    const persons = await loadPersons({limit:'20', ofset});
+    const personListData: PersonsList = [];
+    const persons = await loadPersons({limit:'10', ofset});
     const keys = Object.keys(persons.results);
     for (let k = 0; k < keys.length; k++) {
       const person = persons.results[k];
@@ -111,4 +110,10 @@ export const pokeLoader = createAsyncThunk(
   },
 );
 
+export const pokeloder1 = createAsyncThunk(
+  'getPokes1',
+  async (ofset: number, {dispatch}) => {
+    const personsList: PersonsList = [];
 
+  },
+);

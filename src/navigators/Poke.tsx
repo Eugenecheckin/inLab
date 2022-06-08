@@ -7,7 +7,7 @@ import {
 
 import PersonDetails from '../screens/Poke/PersonDetails';
 import PokeTab from './PokeTab';
-import RnCamera from '../screens/Poke/RnCamera';
+import SimpleCam from '../screens/Poke/SimpleCam';
 import { RootStackParamList } from './RootNavigator';
 
 const Stack = createNativeStackNavigator();
@@ -25,7 +25,7 @@ const Poke = () => {
             })}
           />
           <Stack.Screen name="PersonDetails" component={PersonDetails} options={{ headerShown: false }} />
-          <Stack.Screen name="RnCamera" component={RnCamera} options={{ headerShown: false }} />
+          <Stack.Screen name="SimpleCam" component={SimpleCam} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

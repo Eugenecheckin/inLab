@@ -11,6 +11,20 @@ export const loadPersons = async (params: IParams) => {
 };
 
 
+interface IPerson {
+  id: number;
+}
+
+export const loadShortPersonInfo = async (params: IPerson) => {
+  const { data } = await axios.get('/', {params});
+  return data;
+};
+
+export const loadPersonAbility = async (params: IPerson) => {
+  const { data } = await axios.get('/ability', {params});
+  return data;
+};
+
 export const loadExtendPersonData = async (url: string) => {
   const { data } = await axios.get(url);
   const { id, abilities, sprites } = data;

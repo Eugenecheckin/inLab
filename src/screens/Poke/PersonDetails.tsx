@@ -20,7 +20,7 @@ import styles from './personDetail.Style';
 type RootStackParamList = {
   Persons: undefined;
   PersonDetails: {id: string};
-  RnCamera: undefined;
+  SimpleCam: undefined;
 }
 
 const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'PersonDetails'>> = ({ navigation, route }) => {

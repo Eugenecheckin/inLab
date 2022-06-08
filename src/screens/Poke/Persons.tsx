@@ -10,13 +10,13 @@ import {
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useDispatch, useSelector } from 'react-redux';
 import PersonInfo from './components/PersonInfo';
-import { pokeLoader } from '../../store/thunk';
+import { pokeLoader, pokeLoader1 } from '../../store/thunk';
 import FilterDrawer from './components/FilterDrawer';
 
 type RootStackParamList = {
   Persons: undefined;
   PersonDetails: {id: string};
-  RnCamera: undefined;
+  SimpleCam: undefined;
 }
 const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -27,13 +27,12 @@ const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = 
   useEffect(() => {
     dispatch(pokeLoader(+update));
     // dispatch(getFilteredList());
-  }, []);
+  }, [update]);
 
 
   const loadNextHendler = () => {
     const newUpdate = update + 10;
     setUpdate(newUpdate);
-    dispatch(pokeLoader(+update));
   };
 
   return (

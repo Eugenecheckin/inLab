@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
     alignSelf: 'center',
     fontSize:25,
-    fontFamily: 'Acme-Regular',
+    // fontFamily: 'Acme-Regular',
   },
   sectionContainer: {
     flex:5,
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     height: 20,
     textTransform: 'capitalize',
     fontWeight: 'bold',
-    fontFamily: 'Acme-Regular',
+    // fontFamily: 'Acme-Regular',
   },
   dotStyle: {
     width: 6,

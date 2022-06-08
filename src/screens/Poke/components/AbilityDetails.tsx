@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     margin: 3,
     textTransform: 'capitalize',
     fontWeight: 'bold',
-    fontFamily: 'Acme-Regular',
+    // fontFamily: 'Acme-Regular',
     color: '#7f7f7f',
   },
   effectContainer: {

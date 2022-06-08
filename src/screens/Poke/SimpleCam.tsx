@@ -10,7 +10,7 @@ import {RNCamera} from 'react-native-camera';
 
 import Button from '../../ui/components/Button';
 
-class RnCamera extends React.PureComponent {
+class SimpleCam extends React.PureComponent {
   constructor(props) {
     super(props);
     this.onPressButton = this.onPressButton.bind(this);
@@ -130,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RnCamera;
+export default SimpleCam;
