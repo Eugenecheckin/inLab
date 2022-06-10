@@ -8,9 +8,9 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useDispatch, useSelector } from 'react-redux';
+import { usePokeDispatch, usePokeSelector } from '../../store/pokeStoreHook';
 import PersonInfo from './components/PersonInfo';
-import { pokeLoader, pokeLoader1 } from '../../store/thunk';
+import { pokeListLoader } from '../../store/thunk';
 import FilterDrawer from './components/FilterDrawer';
 
 type RootStackParamList = {
@@ -19,20 +19,19 @@ type RootStackParamList = {
   SimpleCam: undefined;
 }
 const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const personListDataRedux: [] = useSelector((state) => state.pokeApi.personListData);
-  // const filterPersonListDataRedux: [] = useSelector((state) => state.pokeApi.filterPersonListData);
-  const [update, setUpdate] = useState(0);
+  const dispatch = usePokeDispatch();
+  const personListDataRedux = usePokeSelector((state) => state.pokeApi.personListData);
+  const [ofset, setOfset] = useState(0);
 
   useEffect(() => {
-    dispatch(pokeLoader(+update));
-    // dispatch(getFilteredList());
-  }, [update]);
+    dispatch(pokeListLoader(+ofset));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ofset]);
 
 
   const loadNextHendler = () => {
-    const newUpdate = update + 10;
-    setUpdate(newUpdate);
+    const newUpdate = ofset + 10;
+    setOfset(newUpdate);
   };
 
   return (

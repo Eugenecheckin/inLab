@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import {
   View,
   Text,
@@ -12,7 +11,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AbilityDetails from './components/AbilityDetails';
-
+import { usePokeDispatch, usePokeSelector } from '../../store/pokeStoreHook';
 import Button from '../../ui/components/Button';
 import { invert } from '../../store/pokeApiSlice';
 import styles from './personDetail.Style';
@@ -24,8 +23,8 @@ type RootStackParamList = {
 }
 
 const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'PersonDetails'>> = ({ navigation, route }) => {
-  const personListData = useSelector(({ pokeApi }) => pokeApi.personListData);
-  const dispatch = useDispatch();
+  const personListData = usePokeSelector(({ pokeApi }) => pokeApi.personListData);
+  const dispatch = usePokeDispatch();
   const [routes, setRoutes] = useState([{ key: '', title: '', source: ''}]);
   const [activeSlide, setactiveSlide] = useState(0);
 

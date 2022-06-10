@@ -1,15 +1,25 @@
 import axios from './axios';
 
 
-interface IParams {
+type baseParams = {
   limit: string;
   ofset: number;
 }
-export const loadPersons = async (params: IParams) => {
-  const { data } = await axios.get('/', {params});
+
+type basePokeList = {
+  count: number;
+  next: string;
+  results: {
+    url: string,
+    name: string;
+  }[];
+}
+
+
+export const loadPokemons = async (params: baseParams) => {
+  const { data } : { data: basePokeList } = await axios.get('/', {params});
   return data;
 };
-
 
 interface IPerson {
   id: number;
@@ -38,7 +48,7 @@ export const loadExtendAbilities = async (url: string) => {
 };
 
 export default {
-  loadPersons,
   loadExtendAbilities,
   loadExtendPersonData,
+  loadPokemons,
 };

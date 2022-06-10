@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setPersonListData, setFilterPersonListData } from './pokeApiSlice';
-import { loadPersons, loadExtendPersonData, loadExtendAbilities } from '../api/pokeApi';
+import { setPersonListData, setFilterPersonListData, setPersonShortListData } from './pokeApiSlice';
+import { loadPokemons, loadExtendPersonData, loadExtendAbilities } from '../api/pokeApi';
+import { PokeStore, PokeDispatch } from './store';
 
 interface IAbility {
   name: string;
@@ -12,28 +13,26 @@ interface IFilter {
   ability: string;
 }
 
-const hasAbility = (person: IPerson, filter: IFilter) : boolean  => {
+const hasAbility = (person: IPerson, filter: IFilter): boolean => {
   const result = person.shortAbilities.find((item) =>
     item.name === filter.ability);
   return !!result;
 };
 
-export const getFilteredList = createAsyncThunk(
+export const getFilteredList = createAsyncThunk<unknown, unknown, { dispatch: PokeDispatch, state: PokeStore }>(
   'getFilteredPokes',
-  async (args, {dispatch, getState}) => {
+  async (args, { dispatch, getState }) => {
     const {
       filter,
       personListData,
     } = getState().pokeApi;
     const filterPersonList: Array<IPerson> = [];
-    console.log(personListData);
     personListData.forEach((person) => {
       const isFilterIn = hasAbility(person, filter);
       if (isFilterIn) {
         filterPersonList.push(person);
       }
     });
-    console.log(filterPersonList);
     dispatch(setFilterPersonListData(filterPersonList));
   },
 );
@@ -42,46 +41,46 @@ type PersonsList = {
   id: string;
   name: string;
   shortAbilities: {
-    effect: {effect: any; short_effect: any}[];
+    effect: { effect: any; short_effect: any }[];
     flavor: any[];
     name: string;
-  }[];
+  }[] | undefined;
   source: {
     front: string;
     frontShiny: string;
     back: string;
     backShiny: string;
-  };
+  } | undefined;
 }[]
 const imageUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
-export const pokeLoader = createAsyncThunk(
+export const pokeListLoader = createAsyncThunk(
   'getPokes',
-  async (ofset: number, {dispatch, getState}) => {
+  async (ofset: number, { dispatch }) => {
     const personListData: PersonsList = [];
-    const persons = await loadPersons({limit:'10', ofset});
+    const persons = await loadPokemons({ limit: '10', ofset });
     const keys = Object.keys(persons.results);
     for (let k = 0; k < keys.length; k++) {
       const person = persons.results[k];
       const shortAbilities = [];
       const extendPersonData = await loadExtendPersonData(person.url);
       if (extendPersonData) {
-        const parsedEffect: {effect: any; short_effect: any}[] = [];
+        const parsedEffect: { effect: any; short_effect: any }[] = [];
         const parsedFlavor: any[] = [];
         const nodes = Object.keys(extendPersonData.abilities);
         for (let i = 0; i < nodes.length; i++) {
-          const {ability} = extendPersonData.abilities[i];
+          const { ability } = extendPersonData.abilities[i];
           // eslint-disable-next-line no-await-in-loop
           const loadedAbility = await loadExtendAbilities(ability.url);
           if (loadedAbility) {
-            loadedAbility.effectEntries.forEach((item: {effect: any, short_effect: any, language: {name: string}}) => {
+            loadedAbility.effectEntries.forEach((item: { effect: any, short_effect: any, language: { name: string } }) => {
               if (item.language.name === 'en') {
-                const {effect, short_effect} = item;
-                parsedEffect.push({effect, short_effect});
+                const { effect, short_effect } = item;
+                parsedEffect.push({ effect, short_effect });
               }
             });
-            loadedAbility.flavorEntries.forEach((flavor: {language: {name: string}, flavor_text: string, version_group: {name: string}}) => {
+            loadedAbility.flavorEntries.forEach((flavor: { language: { name: string }, flavor_text: string, version_group: { name: string } }) => {
               if (flavor.language.name === 'en') {
-                parsedFlavor.push(`${flavor.flavor_text  }  -  ${  flavor.version_group.name}`);
+                parsedFlavor.push(`${flavor.flavor_text}  -  ${flavor.version_group.name}`);
               }
             });
           }
@@ -110,10 +109,19 @@ export const pokeLoader = createAsyncThunk(
   },
 );
 
-export const pokeloder1 = createAsyncThunk(
-  'getPokes1',
-  async (ofset: number, {dispatch}) => {
-    const personsList: PersonsList = [];
+type IPersonsShortList = {
+  url: string,
+  name: string,
+}[]
 
+export const pokeLoader1 = createAsyncThunk(
+  'getPokes1',
+  async (ofset: number, { dispatch }) => {
+    const personsList: IPersonsShortList = [];
+    const persons = await loadPokemons({ limit: '10', ofset });
+    persons.results.forEach((person: { url: string, name: string }) => {
+      personsList.push({ url: person.url, name: person.name });
+    });
+    await dispatch(setPersonShortListData(personsList));
   },
 );
