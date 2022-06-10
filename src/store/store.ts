@@ -7,6 +7,6 @@ export const store = configureStore({
   },
 });
 
-export type PokeStore = ReturnType<typeof store.getState>;
+export type RootStore = ReturnType<typeof store.getState>;
 
-export type PokeDispatch = typeof store.dispatch;
+export type AppDispatch = typeof store.dispatch;

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setPersonListData, setFilterPersonListData, setPersonShortListData } from './pokeApiSlice';
 import { loadPokemons, loadExtendPersonData, loadExtendAbilities } from '../api/pokeApi';
-import { PokeStore, PokeDispatch } from './store';
+import { RootStore, AppDispatch } from './store';
 
 interface IAbility {
   name: string;
@@ -19,7 +19,7 @@ const hasAbility = (person: IPerson, filter: IFilter): boolean => {
   return !!result;
 };
 
-export const getFilteredList = createAsyncThunk<unknown, unknown, { dispatch: PokeDispatch, state: PokeStore }>(
+export const getFilteredList = createAsyncThunk<unknown, unknown, { dispatch: AppDispatch, state: RootStore }>(
   'getFilteredPokes',
   async (args, { dispatch, getState }) => {
     const {

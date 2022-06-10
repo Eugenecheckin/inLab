@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { usePokeDispatch, usePokeSelector } from '../../store/pokeStoreHook';
+import { useAppDispatch, useRootSelector } from '../../store/storeHook';
 import PersonInfo from './components/PersonInfo';
 import { pokeListLoader } from '../../store/thunk';
 import FilterDrawer from './components/FilterDrawer';
@@ -19,8 +19,8 @@ type RootStackParamList = {
   SimpleCam: undefined;
 }
 const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = ({ navigation }) => {
-  const dispatch = usePokeDispatch();
-  const personListDataRedux = usePokeSelector((state) => state.pokeApi.personListData);
+  const dispatch = useAppDispatch();
+  const personListDataRedux = useRootSelector((state) => state.pokeApi.personListData);
   const [ofset, setOfset] = useState(0);
 
   useEffect(() => {
