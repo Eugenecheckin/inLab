@@ -1,54 +1,28 @@
 import axios from './axios';
-
+import { IPokemonBase, IShortListPokemons, IExtendedAbility } from '../constants/types';
 
 type baseParams = {
   limit: string;
-  ofset: number;
+  offset: number;
 }
-
-type basePokeList = {
-  count: number;
-  next: string;
-  results: {
-    url: string,
-    name: string;
-  }[];
-}
-
 
 export const loadPokemons = async (params: baseParams) => {
-  const { data } : { data: basePokeList } = await axios.get('/', {params});
+  const { data } : { data: { results: Array<IShortListPokemons> } } = await axios.get('/', {params});
+  return data.results;
+};
+
+export const loadPokemon = async (params: {name : string }) => {
+  const { data } : { data: IPokemonBase} = await axios.get(`/${params.name}`);
   return data;
 };
 
-interface IPerson {
-  id: number;
-}
-
-export const loadShortPersonInfo = async (params: IPerson) => {
-  const { data } = await axios.get('/', {params});
+export const loadPersonAbility = async (params: { url: string }) => {
+  const { data } : { data: IExtendedAbility} = await axios.get(`${params.url}`);
   return data;
-};
-
-export const loadPersonAbility = async (params: IPerson) => {
-  const { data } = await axios.get('/ability', {params});
-  return data;
-};
-
-export const loadExtendPersonData = async (url: string) => {
-  const { data } = await axios.get(url);
-  const { id, abilities, sprites } = data;
-  return { id, abilities, sprites };
-};
-
-export const loadExtendAbilities = async (url: string) => {
-  const { data } = await axios.get(url);
-  const { effect_entries, flavor_text_entries } = data;
-  return { effectEntries: effect_entries, flavorEntries: flavor_text_entries };
 };
 
 export default {
-  loadExtendAbilities,
-  loadExtendPersonData,
+  loadPersonAbility,
   loadPokemons,
+  loadPokemon,
 };

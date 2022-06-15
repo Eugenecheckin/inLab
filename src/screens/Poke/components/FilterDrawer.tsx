@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
-import { setFilter } from '../../../store/pokeApiSlice';
-import { getFilteredList } from '../../../store/thunk';
+import { setFilter } from '../../../store/poke/reduser';
+import { getFilteredPokemons } from '../../../store/poke/thunk';
 import ManualButton from '../../../ui/components/ManualButton';
 
 const FilterDrawer = () => {
@@ -10,7 +10,7 @@ const FilterDrawer = () => {
   const [right, setRight] = useState(5);
   const [pokeAbility, setPokeAbility] = useState('');
   const dispatch = useDispatch();
-  const show = useSelector(({ pokeApi })=> pokeApi.isNoticed);
+  const show = useSelector(({ poke })=> poke.isNoticed);
   useEffect(() => {
     show ? setRight(10) : setRight(-200);
   },[show]);
@@ -21,7 +21,7 @@ const FilterDrawer = () => {
   const applyHendler = async (value: IAbility) => {
     try {
       await dispatch(setFilter(value.pokeAbility));
-      dispatch(getFilteredList());
+      dispatch(getFilteredPokemons());
       if (!value.pokeAbility) {
         setPokeAbility('');
       }

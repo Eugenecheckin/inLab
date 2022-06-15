@@ -4,14 +4,15 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { removeLoginData } from '../../store/asyncStore';
+import { showMessage, hideMessage } from 'react-native-flash-message';
+import { removeLoginData } from '../../store/auth/asyncStore';
 import Out from '../../assets/images/Out.svg';
 import Comment from '../../assets/images/Comment.svg';
 import Magnifier from '../../assets/images/Magnifier.svg';
 import Camera from '../../assets/images/Camera.svg';
 
 const TabBar: React.FC<BottomTabBarProps> = ({ navigation }) => {
-  const isNoticed = useSelector(({ pokeApi }) => pokeApi.isNoticed);
+  const isNoticed = useSelector(({ poke }) => poke.isNoticed);
   return (
     <View style={styles.sectionContainer} >
       <TouchableOpacity
@@ -23,11 +24,22 @@ const TabBar: React.FC<BottomTabBarProps> = ({ navigation }) => {
         <Out width={32} height={32}/>
         {/* <MaterialCommunityIcons name="logout" color="#576270" size={25} /> */}
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          showMessage({
+            message: 'Simple message',
+            type: 'info',
+          });
+        }}
+      >
         <Comment width={32} height={32}/>
         {/* <MaterialCommunityIcons name="comment-multiple-outline" color="#576270" size={25} /> */}
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          hideMessage();
+        }}
+      >
         <Magnifier width={32} height={32}/>
         {/* <MaterialCommunityIcons name="magnify" color="#576270" size={25} /> */}
       </TouchableOpacity>

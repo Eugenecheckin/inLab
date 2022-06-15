@@ -1,16 +1,16 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { PokeSlice, IPokemon, IShortPokemon } from './types';
+import { PokeSlice, IPokemonBase, IExtendedAbility } from '../../constants/types';
 
 const initialState: PokeSlice = {
   isNoticed: false,
-  personsShortListData: [],
-  personListData: [],
-  filterPersonListData: [],
+  filteredPokemons: [],
   filter: {
     ability: '',
   },
+  pokemons: [],
+  extendedAbilities: [],
 };
 
 export const pokeApiSlice = createSlice({
@@ -26,13 +26,19 @@ export const pokeApiSlice = createSlice({
     invert: (state) => {
       state.isNoticed = !state.isNoticed;
     },
-    setPersonListData: (state, action: PayloadAction<Array<IPokemon>>) => {
+    setPokemons: (state, action: PayloadAction<Array<IPokemonBase>>) => {
       return {
         ...state,
-        personListData: [
-          ...state.personListData,
+        pokemons: [
+          ...state.pokemons,
           ...action.payload,
         ],
+      };
+    },
+    setExtendedAbilities: (state, action: PayloadAction<Array<IExtendedAbility>>) => {
+      return {
+        ...state,
+        extendedAbilities: action.payload,
       };
     },
     clearFilter: (state) => {
@@ -51,21 +57,15 @@ export const pokeApiSlice = createSlice({
         },
       };
     },
-    setFilterPersonListData: (state, action: PayloadAction<Array<IPokemon>>) => {
+    setFilteredPokemons: (state, action: PayloadAction<Array<IPokemonBase>>) => {
       return {
         ...state,
-        filterPersonListData: action.payload,
-      };
-    },
-    setPersonShortListData: (state, action: PayloadAction<Array<IShortPokemon>>) => {
-      return {
-        ...state,
-        personShortListData: action.payload,
+        filteredPokemons: action.payload,
       };
     },
   },
 });
 
-export const { show, hide, invert, setPersonListData, setFilter, clearFilter, setFilterPersonListData, setPersonShortListData } = pokeApiSlice.actions;
+export const { show, hide, invert, setPokemons, setExtendedAbilities, setFilter, clearFilter, setFilteredPokemons } = pokeApiSlice.actions;
 
 export default pokeApiSlice.reducer;

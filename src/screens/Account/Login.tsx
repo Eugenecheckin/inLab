@@ -11,7 +11,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import appLogo from '../../assets/images/appLogo.png';
 import postLogin from '../../api/authApi';
-import { storeLoginData } from '../../store/asyncStore';
+import { storeLoginData } from '../../store/auth/asyncStore';
 
 import ManualButton from '../../ui/components/ManualButton';
 

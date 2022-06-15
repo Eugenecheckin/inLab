@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Filter from '../../assets/images/Filter.svg';
 import { RootStackParamList } from '../RootNavigator';
-import { invert } from '../../store/pokeApiSlice';
+import { invert } from '../../store/poke/reduser';
 
 type ScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Poke'>
 

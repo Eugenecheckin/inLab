@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import pokeApiReducer from './pokeApiSlice';
+import logger from 'redux-logger';
+import pokeReducer from './poke/reduser';
 
 export const store = configureStore({
   reducer: {
-    pokeApi: pokeApiReducer,
+    poke: pokeReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
 export type RootStore = ReturnType<typeof store.getState>;

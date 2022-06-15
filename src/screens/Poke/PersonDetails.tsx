@@ -11,9 +11,10 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AbilityDetails from './components/AbilityDetails';
-import { usePokeDispatch, usePokeSelector } from '../../store/pokeStoreHook';
+import { useAppDispatch, useRootSelector } from '../../store/storeHook';
 import Button from '../../ui/components/Button';
-import { invert } from '../../store/pokeApiSlice';
+import { invert } from '../../store/poke/reduser';
+import { getAbilities } from '../../store/poke/thunk';
 import styles from './personDetail.Style';
 
 type RootStackParamList = {
@@ -23,42 +24,47 @@ type RootStackParamList = {
 }
 
 const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'PersonDetails'>> = ({ navigation, route }) => {
-  const personListData = usePokeSelector(({ pokeApi }) => pokeApi.personListData);
-  const dispatch = usePokeDispatch();
+  const pokemons = useRootSelector(({ poke }) => poke.pokemons);
+  const abilities = useRootSelector(({ poke }) => poke.extendedAbilities);
+  const dispatch = useAppDispatch();
   const [routes, setRoutes] = useState([{ key: '', title: '', source: ''}]);
   const [activeSlide, setactiveSlide] = useState(0);
 
   const isShowHideHandter = () => {
     dispatch(invert());
   };
-
+  const personData = pokemons.find(el => el.id === route.params.id);
+  const listAbilitiesUrl = personData?.abilities.map(item => item.ability.url);
   useEffect(() => {
+    if (personData) {
       setRoutes([
         {
           key: 'front',
           title: 'Front',
-          source: personData.source.front,
+          source: personData?.sprites.front_default,
         },
         {
           key: 'back',
           title: 'Back',
-          source: personData.source.back,
+          source: personData?.sprites.back_dafuult,
         },
         {
           key: 'frontShiny',
           title: 'Front Shiny',
-          source: personData.source.frontShiny,
+          source: personData?.sprites.front_shiny,
         },
         {
           key: 'backShiny',
           title: 'Back Shiny',
-          source: personData.source.backShiny,
+          source: personData?.sprites.back_shiny,
         },
       ]);
+      if (listAbilitiesUrl) {
+        dispatch(getAbilities(listAbilitiesUrl));
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [route.params]);
-
-  const personData = personListData.find(el => el.id === route.params.id);
 
   interface ILogo {
     source: string;
@@ -75,6 +81,8 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
       </View>
     );
   };
+
+
 
   const onPressButton = () => {
     navigation.navigate('Persons');
@@ -100,9 +108,9 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
         inactiveDotOpacity={0.6}
         inactiveDotScale={0.6}
       />
-      <View style={styles.viewTitleText}>
+      {personData && <View style={styles.viewTitleText}>
         <Text style={styles.titleText} >{personData.name}</Text>
-      </View>
+      </View>}
       <View style={styles.like}>
         <TouchableOpacity
           style={styles.buttonArrea}
@@ -113,16 +121,16 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
           </Text>
         </TouchableOpacity>
       </View>
-      <SafeAreaView style={styles.sectionContainer}>
+      {/* <SafeAreaView style={styles.sectionContainer}>
         <Text style={styles.personInfo}>Abillity:</Text>
         <FlatList
-          data={personData.shortAbilities}
+          data={abilities}
           renderItem={({item, index}) => (
               <AbilityDetails shortAbility={item} ind={index} />
           )}
           keyExtractor={item => item.id}
         />
-      </SafeAreaView>
+      </SafeAreaView> */}
       <View style={styles.backToPerson}>
         <Button
           onPress={onPressButton}
