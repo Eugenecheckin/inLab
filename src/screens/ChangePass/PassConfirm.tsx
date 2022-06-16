@@ -6,7 +6,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-
+import { showMessage } from 'react-native-flash-message';
 import { confirmPass } from '../../api/changePassApi';
 import ManualButton from '../../ui/components/ManualButton';
 import appLogo from '../../assets/images/appLogo.png';
@@ -25,7 +25,10 @@ const PassConfirm: React.FC<NativeStackScreenProps<RootStackParamList,'PassConfi
 
   const sendControlHendler = async () => {
     if ( password !== confirmPassword ) {
-      console.log("Entered password don't equal");
+      showMessage({
+        message: 'Entered password don\'t equal',
+        type: 'info',
+      });
     } else {
       const res = await confirmPass({ password, secret });
       if (res.data.result) {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { showMessage } from 'react-native-flash-message';
 import Persons from '../screens/Poke/Persons';
 import TabBar from '../screens/PokeTab/TabBar';
 import PersonsTitle from './components/PersonsTitle';
@@ -16,8 +16,12 @@ const PokeTab = ({ navigation }) => {
           navigation.navigate('Auth');
         }
       });
-    } catch {
-      console.log('bax');
+    } catch (err) {
+      const customErr = err as Error;
+      showMessage({
+        message: `${customErr.message}`,
+        type: 'info',
+      });
     }
   };
   useEffect(()=> {

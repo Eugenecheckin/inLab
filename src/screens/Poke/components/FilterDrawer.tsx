@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 import { setFilter } from '../../../store/poke/reduser';
 import { getFilteredPokemons } from '../../../store/poke/thunk';
 import ManualButton from '../../../ui/components/ManualButton';
@@ -25,7 +26,13 @@ const FilterDrawer = () => {
       if (!value.pokeAbility) {
         setPokeAbility('');
       }
-    } catch { console.log('babaX'); }
+    } catch (err) {
+      const customErr = err as Error;
+      showMessage({
+        message: `${customErr.message}`,
+        type: 'info',
+      });
+    }
   };
 
   return (

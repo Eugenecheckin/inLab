@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-
+import { showMessage } from 'react-native-flash-message';
 import appLogo from '../../assets/images/appLogo.png';
 import postLogin from '../../api/authApi';
 import { storeLoginData } from '../../store/auth/asyncStore';
-
+import { createError } from '../../utils/createError';
 import ManualButton from '../../ui/components/ManualButton';
 
 type RootStackParamList = {
@@ -34,7 +34,17 @@ const Login: React.FC<NativeStackScreenProps<RootStackParamList,'Login'>> = ({ n
       const responce = await postLogin(value);
       await storeLoginData(responce.data);
       navigation.navigate('Persons');
-    } catch { console.log('babaX'); }
+    } catch (err) {
+      const customErr = err as Error;
+      if (customErr.name === 'AxiosError') {
+        showMessage({
+          message: customErr.message,
+          type: 'info',
+        });
+      } else {
+        throw createError('custom err', 'login');
+      }
+    }
   };
   return (
     <View style={styles.sectionContainer}>

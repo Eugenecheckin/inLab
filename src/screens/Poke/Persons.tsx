@@ -42,8 +42,7 @@ const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = 
     const nextOffset = offset + 10;
     setOfset(nextOffset);
   };
-  console.log(!filter);
-  
+
   return (
     <View>
       <View>
