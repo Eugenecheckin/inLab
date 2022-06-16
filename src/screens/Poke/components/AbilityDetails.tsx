@@ -5,24 +5,12 @@ import {
   FlatList,
   StyleSheet,
 } from 'react-native';
+import { IExtendedAbility, IEffectEntries, IFlavorEntries } from '../../../constants/types';
 
-interface IFlavor {
-  name: string;
-}
-interface IEffect {
-  name: string;
-  effect: string;
-}
-
-interface IAbility {
-  flavor: Array<IFlavor>,
-  effect: Array<IEffect>,
-}
-
-const AbilityDetails: React.FC<{ shortAbility: IAbility, ind: number }> = ({ shortAbility, ind }) => (
-  <View >
-      <FlatList
-        data={shortAbility.flavor}
+const AbilityDetails: React.FC<{ abilities: IExtendedAbility, ind: number }> = ({ abilities, ind }) => (
+  <View>
+     <FlatList
+        data={abilities.flavor_text_entries.filter(i=> i.language.name === 'en')}
         renderItem={({item}) => (
           <View style={styles.flavorContainer}>
             <Flavor flavor={item} />
@@ -32,8 +20,7 @@ const AbilityDetails: React.FC<{ shortAbility: IAbility, ind: number }> = ({ sho
         keyExtractor={item => `${item}-flavor`}
       />
       <FlatList
-        // style={styles.testBorder}
-        data={shortAbility.effect}
+        data={abilities.effect_entries.filter(i=>i.language.name === 'en')}
         renderItem={({item}) => (
           <View style={styles.effectContainer}>
             <Effect effect={item} />
@@ -45,23 +32,19 @@ const AbilityDetails: React.FC<{ shortAbility: IAbility, ind: number }> = ({ sho
   </View>
 );
 
-const Flavor: React.FC<{ flavor: IFlavor }> = ({ flavor }) => (
+const Flavor: React.FC<{ flavor: IFlavorEntries }> = ({ flavor }) => (
   <View>
-    <Text style={styles.abilityItemText}>{flavor}</Text>
+    <Text style={styles.abilityItemText}>{`${flavor.version_group.name  } ${  flavor.flavor_text}`}</Text>
   </View>
 );
 
-const Effect: React.FC<{ effect: IEffect }> = ({ effect }) => (
+const Effect: React.FC<{ effect: IEffectEntries }> = ({ effect }) => (
   <View>
     <Text style={styles.abilityItemText}>{effect.effect}</Text>
   </View>
 );
 
 const styles = StyleSheet.create({
-  /* testBorder: {
-    borderWidth: 1,
-    borderColor: 'black',
-  }, */
   abilityItemText: {
     margin: 3,
     textTransform: 'capitalize',

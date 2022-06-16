@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     flex:1,
     marginTop: 3,
     marginBottom: 3,
-    width: 150,
+    width: 180,
     height: 150,
     alignSelf: 'center',
   },

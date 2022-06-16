@@ -81,9 +81,6 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
       </View>
     );
   };
-
-
-
   const onPressButton = () => {
     navigation.navigate('Persons');
   };
@@ -121,16 +118,16 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
           </Text>
         </TouchableOpacity>
       </View>
-      {/* <SafeAreaView style={styles.sectionContainer}>
+      <SafeAreaView style={styles.sectionContainer}>
         <Text style={styles.personInfo}>Abillity:</Text>
         <FlatList
           data={abilities}
           renderItem={({item, index}) => (
-              <AbilityDetails shortAbility={item} ind={index} />
+              <AbilityDetails abilities={item} ind={index} />
           )}
           keyExtractor={item => item.id}
         />
-      </SafeAreaView> */}
+      </SafeAreaView>
       <View style={styles.backToPerson}>
         <Button
           onPress={onPressButton}
@@ -140,5 +137,6 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
     </View>
   );
 };
+
 
 export default PersonDetails;

@@ -10,10 +10,21 @@ export interface IEffectEntries {
   };
   short_effect: string;
 }
+export interface IFlavorEntries {
+  flavor_text: string;
+  language: {
+    name : string;
+  };
+  version_group: {
+    name: string;
+  };
+}
+
 export interface IExtendedAbility {
   id: number;
   name: string;
   effect_entries: Array<IEffectEntries>;
+  flavor_text_entries: Array<IFlavorEntries>;
 }
 
 export interface PokeSlice {

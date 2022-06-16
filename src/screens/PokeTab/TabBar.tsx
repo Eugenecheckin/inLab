@@ -1,10 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useRootSelector } from '../../store/storeHook';
 
-import { showMessage, hideMessage } from 'react-native-flash-message';
 import { removeLoginData } from '../../store/auth/asyncStore';
 import Out from '../../assets/images/Out.svg';
 import Comment from '../../assets/images/Comment.svg';
@@ -12,7 +11,7 @@ import Magnifier from '../../assets/images/Magnifier.svg';
 import Camera from '../../assets/images/Camera.svg';
 
 const TabBar: React.FC<BottomTabBarProps> = ({ navigation }) => {
-  const isNoticed = useSelector(({ poke }) => poke.isNoticed);
+  const isNoticed = useRootSelector(({ poke }) => poke.isNoticed);
   return (
     <View style={styles.sectionContainer} >
       <TouchableOpacity
@@ -24,30 +23,15 @@ const TabBar: React.FC<BottomTabBarProps> = ({ navigation }) => {
         <Out width={32} height={32}/>
         {/* <MaterialCommunityIcons name="logout" color="#576270" size={25} /> */}
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          showMessage({
-            message: 'Simple message',
-            type: 'info',
-          });
-        }}
-      >
+      <TouchableOpacity>
         <Comment width={32} height={32}/>
         {/* <MaterialCommunityIcons name="comment-multiple-outline" color="#576270" size={25} /> */}
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          hideMessage();
-        }}
-      >
+      <TouchableOpacity>
         <Magnifier width={32} height={32}/>
         {/* <MaterialCommunityIcons name="magnify" color="#576270" size={25} /> */}
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('SimpleCam');
-        }}
-      >
+      <TouchableOpacity>
         <Camera width={32} height={32}/>
         {/* <MaterialCommunityIcons name="camera" color="#576270" size={25} /> */}
       </TouchableOpacity>

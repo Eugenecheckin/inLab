@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { setFilter } from '../../../store/poke/reduser';
 import { getFilteredPokemons } from '../../../store/poke/thunk';
 import ManualButton from '../../../ui/components/ManualButton';
+import { useAppDispatch, useRootSelector } from '../../../store/storeHook';
 
 const FilterDrawer = () => {
 
   const [right, setRight] = useState(5);
   const [pokeAbility, setPokeAbility] = useState('');
-  const dispatch = useDispatch();
-  const show = useSelector(({ poke })=> poke.isNoticed);
+  const dispatch = useAppDispatch();
+  const show = useRootSelector(({ poke })=> poke.isNoticed);
   useEffect(() => {
     show ? setRight(10) : setRight(-200);
   },[show]);
