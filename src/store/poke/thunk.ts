@@ -4,6 +4,7 @@ import { setPokemons, setFilteredPokemons, setExtendedAbilities } from './reduse
 import { loadPokemons, loadPokemon, loadPersonAbility } from '../../api/pokeApi';
 import { RootStore, AppDispatch } from '../store';
 import { IPokemonBase, IExtendedAbility } from '../../constants/types';
+import { createError } from '../../utils/createError';
 
 interface IFilter {
   ability: string;
@@ -47,16 +48,13 @@ export const getPokemons = createAsyncThunk(
       dispatch(setPokemons(results));
     } catch (err) {
       const customErr = err as Error;
-      if (customErr.name !== 'AxiosError') {
+      if (customErr.name === 'AxiosError') {
         showMessage({
           message: 'castom',
           type: 'info',
         });
       } else {
-        showMessage({
-          message: `${customErr.message}`,
-          type: 'info',
-        });
+        throw createError('thunk custom err', 'getPokes');
       }
     }
   },

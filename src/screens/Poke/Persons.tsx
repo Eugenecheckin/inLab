@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { showMessage } from 'react-native-flash-message';
 import PersonInfo from './components/PersonInfo';
 import { useAppDispatch, useRootSelector } from '../../store/storeHook';
 import { getPokemons } from '../../store/poke/thunk';
@@ -21,10 +22,19 @@ type RootStackParamList = {
 const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = ({ navigation }) => {
   const dispatch = useAppDispatch();
   const pokemons = useRootSelector((state) => state.poke.pokemons);
+  const filteredPokemons = useRootSelector((state) => state.poke.filteredPokemons);
+  const filter = useRootSelector((state) => state.poke.filter.ability);
   const [offset, setOfset] = useState(0);
 
   useEffect(() => {
-    dispatch(getPokemons(+offset));
+    dispatch(getPokemons(+offset)).unwrap().catch((err) => {
+      const customErr = err as Error;
+      showMessage({
+        message: `${customErr.message}/${customErr.stack}`,
+        type: 'info',
+      });
+    });
+    return () => console.log('размонтировался');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offset]);
 
@@ -32,11 +42,13 @@ const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = 
     const nextOffset = offset + 10;
     setOfset(nextOffset);
   };
+  console.log(!filter);
+  
   return (
     <View>
       <View>
         <SafeAreaView style={styles.screenContainer}>
-          <FlatList
+          {!filter ? (<FlatList
             contentContainerStyle={styles.footerList}
             onEndReached={loadNextHendler}
             data={pokemons}
@@ -54,7 +66,26 @@ const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = 
               </View>
             )}
             keyExtractor={item => item.name}
-          />
+          />) :
+          (<FlatList
+            contentContainerStyle={styles.footerList}
+            onEndReached={loadNextHendler}
+            data={filteredPokemons}
+            ListFooterComponent={<ActivityIndicator size="large" />}
+            renderItem={({item}) => (
+              <View style={styles.personItemContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('PersonDetails', {
+                      id: item.id,
+                    });
+                  }}>
+                  <PersonInfo person={item}/>
+                </TouchableOpacity>
+              </View>
+            )}
+            keyExtractor={item => item.name}
+          />)}
         </SafeAreaView>
         <FilterDrawer />
       </View>
