@@ -6,12 +6,20 @@ import {
   Text,
   Image,
 } from 'react-native';
-import {RNCamera} from 'react-native-camera';
-
+import {RNCamera } from 'react-native-camera';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Button from '../../ui/components/Button';
 
-class SimpleCam extends React.PureComponent {
-  constructor(props) {
+type RootStackParamList = {
+  Persons: undefined;
+  PersonDetails: {id: number};
+  SimpleCam: undefined;
+}
+type test = {
+  camera: RNCamera;
+}
+class SimpleCam extends React.PureComponent<test/* NativeStackScreenProps<RootStackParamList,'SimpleCam'> */> {
+  constructor(props: test/* NativeStackScreenProps<RootStackParamList,'SimpleCam' >*/) {
     super(props);
     this.onPressButton = this.onPressButton.bind(this);
   }
