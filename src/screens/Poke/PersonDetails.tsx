@@ -125,7 +125,7 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
           renderItem={({item, index}) => (
               <AbilityDetails abilities={item} ind={index} />
           )}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.id.toString()}
         />
       </SafeAreaView>
       <View style={styles.backToPerson}>

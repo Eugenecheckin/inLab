@@ -15,11 +15,9 @@ type RootStackParamList = {
   PersonDetails: {id: number};
   SimpleCam: undefined;
 }
-type test = {
-  camera: RNCamera;
-}
-class SimpleCam extends React.PureComponent<test/* NativeStackScreenProps<RootStackParamList,'SimpleCam'> */> {
-  constructor(props: test/* NativeStackScreenProps<RootStackParamList,'SimpleCam' >*/) {
+
+class SimpleCam extends React.PureComponent<NativeStackScreenProps<RootStackParamList>> {
+  constructor(props: NativeStackScreenProps<RootStackParamList>) {
     super(props);
     this.onPressButton = this.onPressButton.bind(this);
   }
