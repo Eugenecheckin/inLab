@@ -25,17 +25,18 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     textTransform: 'capitalize',
     alignSelf: 'center',
-    fontSize:25,
+    fontSize: 25,
     // fontFamily: 'Acme-Regular',
   },
   sectionContainer: {
-    flex:5,
+    flex: 5,
     paddingTop: 5,
     marginTop: 0,
     paddingHorizontal: 0,
   },
   like: {
     margin: 3,
+    marginLeft: 15,
     flex: 1,
     alignSelf: 'flex-start',
   },
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(5, 0, 0, .1)',
     marginTop: 5,
-    marginLeft:2,
+    marginLeft: 2,
     borderRadius: 5,
   },
   textLike: {
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
   },
 
   person: {
-    flex:1,
+    flex: 1,
     marginTop: 3,
     marginBottom: 3,
     width: 180,

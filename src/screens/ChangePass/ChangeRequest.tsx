@@ -41,7 +41,10 @@ const ChangeRequest: React.FC<NativeStackScreenProps<RootStackParamList, 'Change
 
   return (
     <View style={styles.screenContainer}>
-      <Image source={appLogo} style={styles.appLogo} />
+      <Image
+        source={appLogo}
+        style={styles.appLogo}
+      />
       <Input
         placeholder="Email"
         onChange={text => setEmail(text)}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TextInput } from 'react-native';
 import styles from './input.Style';
 
@@ -12,20 +12,14 @@ interface IProps {
 // eslint-disable-next-line no-undef
 const Input = ({ placeholder, defaultValue, onChange, secureTextEntry }: IProps): JSX.Element => {
 
-  const [value, setDefaultValue] = useState('');
-  const onChangeHandler = (text: string) => {
-    setDefaultValue(text);
-    onChange(text);
-  };
-
   return (
     <TextInput
       secureTextEntry={secureTextEntry || undefined}
       autoCapitalize="none"
       style={styles.userData}
       placeholder={placeholder}
-      onChangeText={(text) => onChangeHandler(text)}
-      defaultValue={defaultValue || value}
+      onChangeText={(text) => onChange(text)}
+      defaultValue={defaultValue}
     />
   );
 };

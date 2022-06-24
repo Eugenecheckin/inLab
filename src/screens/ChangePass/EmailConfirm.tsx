@@ -20,7 +20,7 @@ type RootStackParamList = {
 const EmailConfirm: React.FC<NativeStackScreenProps<RootStackParamList, 'EmailConfirm'>> = ({ navigation }) => {
   const [secret, setSecret] = useState('');
 
-  const sendControlHandler = async () => {
+  const sendSecretHandler = async () => {
     try {
       const res = await changePassApi.confirmEmail({ secret });
       if (res.data.message) {
@@ -49,7 +49,7 @@ const EmailConfirm: React.FC<NativeStackScreenProps<RootStackParamList, 'EmailCo
         defaultValue={secret}
       />
       <Button
-        onPress={sendControlHandler}
+        onPress={sendSecretHandler}
         text="Enter confirm"
         viewStyles={styles.viewButton}
       />

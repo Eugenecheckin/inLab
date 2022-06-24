@@ -1,18 +1,20 @@
 import React from 'react';
 import {
   View,
-  StyleSheet,
   TouchableOpacity,
   Text,
   Image,
 } from 'react-native';
-import {RNCamera } from 'react-native-camera';
+import { RNCamera } from 'react-native-camera';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
 import Button from '../../ui/components/button/Button';
+
+import styles from './simpleCam.Style';
 
 type RootStackParamList = {
   Persons: undefined;
-  PersonDetails: {id: number};
+  PersonDetails: { id: number };
   SimpleCam: undefined;
 }
 
@@ -43,7 +45,7 @@ class SimpleCam extends React.PureComponent<NativeStackScreenProps<RootStackPara
       height: 300,
     };
     const data = await this.camera.takePictureAsync(options);
-    this.setState({photo: data.uri});
+    this.setState({ photo: data.uri });
   };
 
   onPressButton = () => {
@@ -51,8 +53,8 @@ class SimpleCam extends React.PureComponent<NativeStackScreenProps<RootStackPara
   }
 
   render() {
-    const {type} = this.state;
-    const {photo} = this.state;
+    const { type } = this.state;
+    const { photo } = this.state;
     return (
       <View style={styles.container}>
         <RNCamera
@@ -64,19 +66,23 @@ class SimpleCam extends React.PureComponent<NativeStackScreenProps<RootStackPara
         />
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={this.takePhoto.bind(this)} style={styles.capture}>
-            <Text style={{ fontSize: 14 }}> SNAP </Text>
+            <Text style={{ fontSize: 14 }}>
+              SNAP
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.flipCamera.bind(this)} style={styles.capture}>
-            <Text style={{ fontSize: 14 }}> RolCam </Text>
+            <Text style={{ fontSize: 14 }}>
+              RolCam
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.previewPhoto}>
           <Text style={styles.textUri}>{photo}</Text>
           <Image
             source={{
-            uri: photo,
-          }}
-          style={styles.person}
+              uri: photo,
+            }}
+            style={styles.person}
           />
         </View>
         <View style={styles.backToPerson}>
@@ -89,51 +95,4 @@ class SimpleCam extends React.PureComponent<NativeStackScreenProps<RootStackPara
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: 'black',
-  },
-  preview: {
-    flex: 0.4,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  backToPerson: {
-    flex: 0.1,
-    alignSelf: 'center',
-  },
-  previewPhoto: {
-    flex: 0.3,
-  },
-  buttonContainer: {
-    flex: 0.2,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  capture: {
-    flex: 0,
-    backgroundColor: '#c8c9cd',
-    borderRadius: 5,
-    padding: 15,
-    paddingHorizontal: 20,
-    alignSelf: 'center',
-    margin: 20,
-  },
-  person: {
-    flex:0,
-    marginTop: 3,
-    marginBottom: 3,
-    width: 150,
-    height: 150,
-    alignSelf: 'center',
-  },
-  textUri: {
-    color: 'white',
-  },
-});
-
 export default SimpleCam;

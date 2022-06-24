@@ -10,16 +10,18 @@ import {
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import AbilityDetails from './components/AbilityDetails';
-import { useAppDispatch, useRootSelector } from '../../store/storeHook';
 import Button from '../../ui/components/button/Button';
+
+import { useAppDispatch, useRootSelector } from '../../store/storeHook';
 import { isVisible } from '../../store/poke/reduser';
 import { getAbilities } from '../../store/poke/thunk';
 import styles from './personDetail.Style';
 
 type RootStackParamList = {
   Persons: undefined;
-  PersonDetails: {id: string};
+  PersonDetails: { id: string };
   SimpleCam: undefined;
 }
 
@@ -27,7 +29,7 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
   const pokemons = useRootSelector(({ poke }) => poke.pokemons);
   const abilities = useRootSelector(({ poke }) => poke.extendedAbilities);
   const dispatch = useAppDispatch();
-  const [routes, setRoutes] = useState([{ key: '', title: '', source: ''}]);
+  const [routes, setRoutes] = useState([{ key: '', title: '', source: '' }]);
   const [activeSlide, setactiveSlide] = useState(0);
 
   const isShowHideHandter = () => {
@@ -46,7 +48,7 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
         {
           key: 'back',
           title: 'Back',
-          source: personData?.sprites.back_dafuult,
+          source: personData?.sprites.back_default,
         },
         {
           key: 'frontShiny',
@@ -64,20 +66,20 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [route.params]);
+  }, [route.params]);
 
   interface ILogo {
     source: string;
   }
-  const logoItem: React.FC<{item: ILogo}> = ({item}) => {
+  const logoItem: React.FC<{ item: ILogo }> = ({ item }) => {
     return (
       <View style={styles.logoContainer}>
-          <Image
-            source={{
-              uri: item.source,
-            }}
-            style={styles.person}
-          />
+        <Image
+          source={{
+            uri: item.source,
+          }}
+          style={styles.person}
+        />
       </View>
     );
   };
@@ -88,14 +90,14 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
   return (
     <View style={styles.screenContainer} >
       <View style={styles.carouselView}>
-      <Carousel
-        style={styles.carousel}
-        data={routes}
-        renderItem={logoItem}
-        sliderWidth={420}
-        itemWidth={240}
-        onSnapToItem={(index) => setactiveSlide(index) }
-      />
+        <Carousel
+          style={styles.carousel}
+          data={routes}
+          renderItem={logoItem}
+          sliderWidth={420}
+          itemWidth={240}
+          onSnapToItem={(index) => setactiveSlide(index)}
+        />
       </View>
       <Pagination
         dotsLength={routes.length}
@@ -105,9 +107,12 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
         inactiveDotOpacity={0.6}
         inactiveDotScale={0.6}
       />
-      {personData && <View style={styles.viewTitleText}>
-        <Text style={styles.titleText} >{personData.name}</Text>
-      </View>}
+      {personData &&
+        <View style={styles.viewTitleText}>
+          <Text style={styles.titleText} >
+            {personData.name}
+          </Text>
+        </View>}
       <View style={styles.like}>
         <TouchableOpacity
           style={styles.buttonArrea}
@@ -122,8 +127,8 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
         <Text style={styles.personInfo}>Abillity:</Text>
         <FlatList
           data={abilities}
-          renderItem={({item, index}) => (
-              <AbilityDetails abilities={item} ind={index} />
+          renderItem={({ item, index }) => (
+            <AbilityDetails abilities={item} ind={index} />
           )}
           keyExtractor={item => item.id.toString()}
         />

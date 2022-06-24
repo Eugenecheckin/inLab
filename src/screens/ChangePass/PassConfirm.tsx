@@ -5,9 +5,9 @@ import { showMessage } from 'react-native-flash-message';
 import { AxiosError } from 'axios';
 
 import Input from '../../ui/components/input/Input';
+import Button from '../../ui/components/button/Button';
 
 import changePassApi from '../../api/changePassApi';
-import Button from '../../ui/components/button/Button';
 import appLogo from '../../assets/images/appLogo.png';
 import styles from './passConfirm.Style';
 
@@ -26,7 +26,7 @@ const PassConfirm: React.FC<NativeStackScreenProps<RootStackParamList, 'PassConf
   const sendControlHandler = async () => {
     if (password !== confirmPassword) {
       showMessage({
-        message: 'Введенные пароли не совпадают',
+        message: 'passwords do not match',
         type: 'warning',
       });
     } else {

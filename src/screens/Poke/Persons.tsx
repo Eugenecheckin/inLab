@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   View,
-  StyleSheet,
   TouchableOpacity,
   SafeAreaView,
   FlatList,
@@ -9,10 +8,13 @@ import {
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { showMessage } from 'react-native-flash-message';
+
 import PersonInfo from './components/PersonInfo';
-import { useAppDispatch, useRootSelector } from '../../store/storeHook';
 import FilterDrawer from './components/FilterDrawer';
+
+import { useAppDispatch, useRootSelector } from '../../store/storeHook';
 import pokeApi from '../../api/pokeApi';
+import styles from './persons.style';
 
 type RootStackParamList = {
   Persons: undefined;
@@ -98,22 +100,5 @@ const Persons: React.FC<NativeStackScreenProps<RootStackParamList, 'Persons'>> =
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  screenContainer: {
-    paddingTop: 15,
-    marginTop: 0,
-    paddingHorizontal: 0,
-    backgroundColor: '#ffffff',
-  },
-  personItemContainer: {
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderColor: 'rgba(5, 0, 0, .1)',
-  },
-  footerList: {
-    paddingBottom: 110,
-  },
-});
 
 export default Persons;
