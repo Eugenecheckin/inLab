@@ -47,7 +47,11 @@ const TabBar: React.FC<BottomTabBarProps> = ({ navigation }) => {
           height={32}
         />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity
+      onPress={async () => {
+        navigation.navigate('SimpleCam');
+      }}
+      >
         <Camera
           width={32}
           height={32}
