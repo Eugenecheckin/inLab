@@ -1,68 +1,60 @@
-import React, {useState} from 'react';
-import {
-  View,
-  TextInput,
-  Image,
-  StyleSheet,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Image } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { showMessage } from 'react-native-flash-message';
+import { AxiosError } from 'axios';
 
-import { confirmEmail } from '../../api/changePassApi';
-import ManualButton from '../../ui/components/ManualButton';
+import Input from '../../ui/components/input/Input';
+import Button from '../../ui/components/button/Button';
 import appLogo from '../../assets/images/appLogo.png';
+
+import changePassApi from '../../api/changePassApi';
+import styles from './emailConfirm.style';
 
 type RootStackParamList = {
   ChangeRequest: undefined;
-  EmailConfirm: {email: string};
+  EmailConfirm: { email: string };
   PassConfirm: { secret: string };
 };
 
 const EmailConfirm: React.FC<NativeStackScreenProps<RootStackParamList, 'EmailConfirm'>> = ({ navigation }) => {
   const [secret, setSecret] = useState('');
 
-  const sendControlHendler = async () => {
-    const res = await confirmEmail({ secret });
-    if (res.data.email) {
-      navigation.navigate('PassConfirm', { secret });
+  const sendControlHandler = async () => {
+    try {
+      const res = await changePassApi.confirmEmail({ secret });
+      if (res.data.message) {
+        showMessage({
+          message: res.data.message,
+          type: 'info',
+        });
+        navigation.navigate('PassConfirm', { secret });
+      }
+    } catch (e) {
+      if (e instanceof AxiosError && e.response) {
+        showMessage({
+          message: e.response.data.message,
+          type: 'danger',
+        });
+      }
     }
   };
 
   return (
     <View style={styles.screenContainer}>
       <Image source={appLogo} style={styles.appLogo} />
-      <TextInput
-        autoCapitalize="none"
-        style={styles.enterConfirm}
+      <Input
         placeholder="Confirm"
-        onChangeText={newText => setSecret(newText)}
+        onChange={newText => setSecret(newText)}
         defaultValue={secret}
       />
-      <ManualButton callback={sendControlHendler} text="Enter confirm"/>
+      <Button
+        onPress={sendControlHandler}
+        text="Enter confirm"
+        viewStyles={styles.viewButton}
+      />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  screenContainer: {
-    marginTop: 32,
-    paddingHorizontal: 42,
-  },
-  appLogo: {
-    marginTop: 100,
-    marginBottom: 130,
-    width: 150,
-    height: 150,
-    alignSelf: 'center',
-  },
-  enterConfirm: {
-    marginTop: 10,
-    marginBottom: 60,
-    padding: 5,
-    height: 40,
-    borderBottomColor: 'gray',
-    borderBottomWidth: 2,
-    fontSize: 16,
-  },
-});
 
 export default EmailConfirm;

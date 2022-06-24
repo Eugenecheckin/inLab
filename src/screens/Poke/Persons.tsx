@@ -11,36 +11,43 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { showMessage } from 'react-native-flash-message';
 import PersonInfo from './components/PersonInfo';
 import { useAppDispatch, useRootSelector } from '../../store/storeHook';
-import { getPokemons } from '../../store/poke/thunk';
 import FilterDrawer from './components/FilterDrawer';
+import pokeApi from '../../api/pokeApi';
 
 type RootStackParamList = {
   Persons: undefined;
-  PersonDetails: {id: number};
+  PersonDetails: { id: number };
   SimpleCam: undefined;
 }
-const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = ({ navigation }) => {
+const Persons: React.FC<NativeStackScreenProps<RootStackParamList, 'Persons'>> = ({ navigation }) => {
   const dispatch = useAppDispatch();
   const pokemons = useRootSelector((state) => state.poke.pokemons);
   const filteredPokemons = useRootSelector((state) => state.poke.filteredPokemons);
   const filter = useRootSelector((state) => state.poke.filter.ability);
   const [offset, setOfset] = useState(0);
 
-  useEffect(() => {
-    dispatch(getPokemons(+offset)).unwrap().catch((err) => {
-      const customErr = err as Error;
+  const getPokemonsList = async (nextItem: number) => {
+    try {
+      const persons = await pokeApi.loadPokemons({ limit: 10, offset: nextItem });
+      const results = await Promise.all(persons);
+      dispatch({ type: 'pokeApi/setPokemons', payload: results });
+    } catch {
       showMessage({
-        message: `${customErr.message}/${customErr.stack}`,
-        type: 'info',
+        message: 'load error',
+        type: 'danger',
       });
-    });
-    return () => console.log('размонтировался');
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [offset]);
+    }
+  };
 
-  const loadNextHendler = () => {
-    const nextOffset = offset + 10;
-    setOfset(nextOffset);
+  useEffect(() => {
+    getPokemonsList(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const loadNextHandler = () => {
+    const next = offset + 10;
+    setOfset(next);
+    getPokemonsList(next);
   };
 
   return (
@@ -49,10 +56,10 @@ const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = 
         <SafeAreaView style={styles.screenContainer}>
           {!filter ? (<FlatList
             contentContainerStyle={styles.footerList}
-            onEndReached={loadNextHendler}
+            onEndReached={loadNextHandler}
             data={pokemons}
             ListFooterComponent={<ActivityIndicator size="large" />}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <View style={styles.personItemContainer}>
                 <TouchableOpacity
                   onPress={() => {
@@ -60,31 +67,31 @@ const Persons: React.FC<NativeStackScreenProps<RootStackParamList,'Persons'>> = 
                       id: item.id,
                     });
                   }}>
-                  <PersonInfo person={item}/>
+                  <PersonInfo person={item} />
                 </TouchableOpacity>
               </View>
             )}
             keyExtractor={item => item.name}
           />) :
-          (<FlatList
-            contentContainerStyle={styles.footerList}
-            onEndReached={loadNextHendler}
-            data={filteredPokemons}
-            ListFooterComponent={<ActivityIndicator size="large" />}
-            renderItem={({item}) => (
-              <View style={styles.personItemContainer}>
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate('PersonDetails', {
-                      id: item.id,
-                    });
-                  }}>
-                  <PersonInfo person={item}/>
-                </TouchableOpacity>
-              </View>
-            )}
-            keyExtractor={item => item.name}
-          />)}
+            (<FlatList
+              contentContainerStyle={styles.footerList}
+              onEndReached={loadNextHandler}
+              data={filteredPokemons}
+              ListFooterComponent={<ActivityIndicator size="large" />}
+              renderItem={({ item }) => (
+                <View style={styles.personItemContainer}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate('PersonDetails', {
+                        id: item.id,
+                      });
+                    }}>
+                    <PersonInfo person={item} />
+                  </TouchableOpacity>
+                </View>
+              )}
+              keyExtractor={item => item.name}
+            />)}
         </SafeAreaView>
         <FilterDrawer />
       </View>

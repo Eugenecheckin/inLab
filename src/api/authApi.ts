@@ -1,18 +1,26 @@
-import { Platform } from 'react-native';
-import axios from 'axios';
+import axios from './axios';
 
-import { REMOTE_PORT } from '../../config';
+interface ILoginData {
+  email: string;
+  password: string;
+}
 
-const host = (Platform.OS === 'android') ? '10.0.2.2' : 'localhost';
-/**
- * @param {{
- * email: string;
- * password: string;
- * }} loginData
- */
-const postLogin = async (loginData: any) => axios.post(
-  `http://${host}:${REMOTE_PORT}/auth/signin`,
+export const postSignIn = async (loginData: ILoginData) => axios.auth.post<{token: string, email: string, name: string}>(
+  '/auth/signin',
   loginData,
 );
 
-export default postLogin;
+export const getLogin = async (token: string) => axios.auth.post<{token:string, email: string, name: string}>(
+  '/auth/login',
+  {},
+  {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  },
+);
+
+export default {
+  postSignIn,
+  getLogin,
+};

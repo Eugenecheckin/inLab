@@ -1,9 +1,17 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { PokeSlice, IPokemonBase, IExtendedAbility } from '../../constants/types';
+import { IPokemonBase, IExtendedAbility } from '../../constants/types';
 
-const initialState: PokeSlice = {
+export interface IPokeSlice {
+  isNoticed: boolean;
+  filteredPokemons: Array<IPokemonBase>;
+  filter: { ability: string };
+  pokemons: Array<IPokemonBase>;
+  extendedAbilities: Array<IExtendedAbility>
+}
+
+const initialState: IPokeSlice = {
   isNoticed: false,
   filteredPokemons: [],
   filter: {
@@ -17,13 +25,7 @@ export const pokeApiSlice = createSlice({
   name: 'pokeApi',
   initialState,
   reducers: {
-    show: (state) => {
-      state.isNoticed = true;
-    },
-    hide: (state) => {
-      state.isNoticed = false;
-    },
-    invert: (state) => {
+    isVisible: (state) => {
       state.isNoticed = !state.isNoticed;
     },
     setPokemons: (state, action: PayloadAction<Array<IPokemonBase>>) => {
@@ -66,6 +68,13 @@ export const pokeApiSlice = createSlice({
   },
 });
 
-export const { show, hide, invert, setPokemons, setExtendedAbilities, setFilter, clearFilter, setFilteredPokemons } = pokeApiSlice.actions;
+export const {
+  isVisible,
+  setPokemons,
+  setExtendedAbilities,
+  setFilter,
+  clearFilter,
+  setFilteredPokemons,
+} = pokeApiSlice.actions;
 
 export default pokeApiSlice.reducer;

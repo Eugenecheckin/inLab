@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {RNCamera } from 'react-native-camera';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import Button from '../../ui/components/Button';
+import Button from '../../ui/components/button/Button';
 
 type RootStackParamList = {
   Persons: undefined;

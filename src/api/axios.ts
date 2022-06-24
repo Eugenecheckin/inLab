@@ -1,7 +1,16 @@
 import axios from 'axios';
+import config from '../../config';
 
-const customAxios = axios.create({
-  baseURL: 'https://pokeapi.co/api/v2/pokemon',
+const poke = axios.create({
+  baseURL: config.POKE_URL,
 });
 
-export default customAxios;
+const auth = axios.create({
+  baseURL: config.SERVER_URL,
+});
+
+export default {
+  poke,
+  auth,
+};
+

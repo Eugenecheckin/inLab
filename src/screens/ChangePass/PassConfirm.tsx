@@ -1,38 +1,49 @@
-import React, {useState} from 'react';
-import {
-  View,
-  TextInput,
-  Image,
-  StyleSheet,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Image } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { showMessage } from 'react-native-flash-message';
-import { confirmPass } from '../../api/changePassApi';
-import ManualButton from '../../ui/components/ManualButton';
+import { AxiosError } from 'axios';
+
+import Input from '../../ui/components/input/Input';
+
+import changePassApi from '../../api/changePassApi';
+import Button from '../../ui/components/button/Button';
 import appLogo from '../../assets/images/appLogo.png';
+import styles from './passConfirm.Style';
 
 type RootStackParamList = {
   ChangeRequest: undefined;
-  EmailConfirm: {email: string};
+  EmailConfirm: { email: string };
   PassConfirm: { secret: string };
   Auth: undefined;
 };
 
-const PassConfirm: React.FC<NativeStackScreenProps<RootStackParamList,'PassConfirm'>> = ({ navigation, route }) => {
-  const { secret} = route.params;
+const PassConfirm: React.FC<NativeStackScreenProps<RootStackParamList, 'PassConfirm'>> = ({ navigation, route }) => {
+  const { secret } = route.params;
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const sendControlHendler = async () => {
-    if ( password !== confirmPassword ) {
+  const sendControlHandler = async () => {
+    if (password !== confirmPassword) {
       showMessage({
-        message: 'Entered password don\'t equal',
-        type: 'info',
+        message: 'Введенные пароли не совпадают',
+        type: 'warning',
       });
     } else {
-      const res = await confirmPass({ password, secret });
-      if (res.data.result) {
+      try {
+        const res = await changePassApi.confirmPass({ password, secret });
+        showMessage({
+          message: res.data.message,
+          type: 'info',
+        });
         navigation.navigate('Auth');
+      } catch (e) {
+        if (e instanceof AxiosError && e.response) {
+          showMessage({
+            message: e.response.data.message,
+            type: 'danger',
+          });
+        }
       }
     }
   };
@@ -40,48 +51,25 @@ const PassConfirm: React.FC<NativeStackScreenProps<RootStackParamList,'PassConfi
   return (
     <View style={styles.screenContainer}>
       <Image source={appLogo} style={styles.appLogo} />
-      <TextInput
+      <Input
         secureTextEntry={true}
-        autoCapitalize="none"
-        style={styles.enterPassword}
         placeholder="New Password"
-        onChangeText={newText => setPassword(newText)}
+        onChange={text => setPassword(text)}
         defaultValue={password}
       />
-      <TextInput
+      <Input
         secureTextEntry={true}
-        autoCapitalize="none"
-        style={styles.enterPassword}
         placeholder="Confirm Password"
-        onChangeText={newText => setConfirmPassword(newText)}
+        onChange={text => setConfirmPassword(text)}
         defaultValue={confirmPassword}
       />
-      <ManualButton callback={sendControlHendler} text="Enter new password"/>
+      <Button
+        onPress={sendControlHandler}
+        text="Enter new password"
+        viewStyles={styles.viewButton}
+      />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  screenContainer: {
-    marginTop: 32,
-    paddingHorizontal: 42,
-  },
-  appLogo: {
-    marginTop: 100,
-    marginBottom: 130,
-    width: 150,
-    height: 150,
-    alignSelf: 'center',
-  },
-  enterPassword: {
-    marginTop: 10,
-    marginBottom: 60,
-    padding: 5,
-    height: 40,
-    borderBottomColor: 'gray',
-    borderBottomWidth: 2,
-    fontSize: 16,
-  },
-});
 
 export default PassConfirm;

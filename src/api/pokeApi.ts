@@ -1,23 +1,24 @@
 import axios from './axios';
-import { IPokemonBase, IShortListPokemons, IExtendedAbility } from '../constants/types';
+import { IPokemonBase, IShortPokemonsList, IExtendedAbility } from '../constants/types';
 
 type baseParams = {
-  limit: string;
+  limit: number;
   offset: number;
 }
 
 export const loadPokemons = async (params: baseParams) => {
-  const { data } : { data: { results: Array<IShortListPokemons> } } = await axios.get('/', {params});
-  return data.results;
+  const { data } = await axios.poke.get<{results: Array<IShortPokemonsList>}>('', {params});
+  const promiseList = data.results.map((person: { name: string }) => { return loadPokemon(person.name); });
+  return promiseList;
 };
 
-export const loadPokemon = async (params: {name : string }) => {
-  const { data } : { data: IPokemonBase} = await axios.get(`/${params.name}`);
+export const loadPokemon = async (name: string) => {
+  const { data }: { data: IPokemonBase } = await axios.poke.get(`/${name}`);
   return data;
 };
 
-export const loadPersonAbility = async (params: { url: string }) => {
-  const { data } : { data: IExtendedAbility} = await axios.get(`${params.url}`);
+export const loadPersonAbility = async (url: string) => {
+  const { data } = await axios.poke.get<IExtendedAbility>(url);
   return data;
 };
 

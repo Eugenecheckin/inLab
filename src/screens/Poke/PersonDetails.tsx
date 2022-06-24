@@ -12,8 +12,8 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AbilityDetails from './components/AbilityDetails';
 import { useAppDispatch, useRootSelector } from '../../store/storeHook';
-import Button from '../../ui/components/Button';
-import { invert } from '../../store/poke/reduser';
+import Button from '../../ui/components/button/Button';
+import { isVisible } from '../../store/poke/reduser';
 import { getAbilities } from '../../store/poke/thunk';
 import styles from './personDetail.Style';
 
@@ -31,7 +31,7 @@ const PersonDetails: React.FC<NativeStackScreenProps<RootStackParamList, 'Person
   const [activeSlide, setactiveSlide] = useState(0);
 
   const isShowHideHandter = () => {
-    dispatch(invert());
+    dispatch(isVisible());
   };
   const personData = pokemons.find(el => el.id === route.params.id);
   const listAbilitiesUrl = personData?.abilities.map(item => item.ability.url);

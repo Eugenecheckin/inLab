@@ -1,4 +1,4 @@
-export interface IShortListPokemons {
+export interface IShortPokemonsList {
   url: string;
   name: string;
 }
@@ -10,6 +10,7 @@ export interface IEffectEntries {
   };
   short_effect: string;
 }
+
 export interface IFlavorEntries {
   flavor_text: string;
   language: {
@@ -23,16 +24,8 @@ export interface IFlavorEntries {
 export interface IExtendedAbility {
   id: number;
   name: string;
-  effect_entries: Array<IEffectEntries>;
-  flavor_text_entries: Array<IFlavorEntries>;
-}
-
-export interface PokeSlice {
-  isNoticed: boolean;
-  filteredPokemons: Array<IPokemonBase>;
-  filter: { ability: string };
-  pokemons: Array<IPokemonBase>;
-  extendedAbilities: Array<IExtendedAbility>
+  effect_entries: IEffectEntries[];
+  flavor_text_entries: IFlavorEntries[];
 }
 
 export interface IAbilityBase {
@@ -51,5 +44,5 @@ export interface IPokemonBase {
     front_default: string,
     front_shiny: string,
   }
-  abilities: Array<IAbilityBase>
+  abilities: IAbilityBase[]
 }

@@ -2,9 +2,8 @@ import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useRootSelector } from '../../store/storeHook';
-
-import { removeLoginData } from '../../store/auth/asyncStore';
+import { useRootSelector, useAppDispatch } from '../../store/storeHook';
+import { removeLoginData } from '../../utils/asyncStore';
 import Out from '../../assets/images/Out.svg';
 import Comment from '../../assets/images/Comment.svg';
 import Magnifier from '../../assets/images/Magnifier.svg';
@@ -12,11 +11,19 @@ import Camera from '../../assets/images/Camera.svg';
 
 const TabBar: React.FC<BottomTabBarProps> = ({ navigation }) => {
   const isNoticed = useRootSelector(({ poke }) => poke.isNoticed);
+  const dispatch = useAppDispatch();
   return (
     <View style={styles.sectionContainer} >
       <TouchableOpacity
         onPress={ async () => {
           await removeLoginData();
+          dispatch({
+            type: 'auth/setUser',
+            payload: {
+              email: '',
+              name: '',
+            },
+          });
           navigation.navigate('Auth');
         }}
       >

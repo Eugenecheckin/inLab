@@ -1,106 +1,104 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
-  TextInput,
   Text,
   Image,
-  StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { showMessage } from 'react-native-flash-message';
+import { AxiosError } from 'axios';
+
+import Input from '../../ui/components/input/Input';
+import Button from '../../ui/components/button/Button';
 import appLogo from '../../assets/images/appLogo.png';
-import postLogin from '../../api/authApi';
-import { storeLoginData } from '../../store/auth/asyncStore';
-import { createError } from '../../utils/createError';
-import ManualButton from '../../ui/components/ManualButton';
+
+import authApi from '../../api/authApi';
+import { useAppDispatch } from '../../store/storeHook';
+import { storeLoginData } from '../../utils/asyncStore';
+import styles from './login.style';
 
 type RootStackParamList = {
   Login: undefined;
   Persons: undefined;
   ChangePass: undefined;
 }
-const Login: React.FC<NativeStackScreenProps<RootStackParamList,'Login'>> = ({ navigation }) => {
 
-  const [email, setUsername] = useState('');
+interface ILoginData {
+  email: string;
+  password: string;
+}
+
+const Login: React.FC<NativeStackScreenProps<RootStackParamList, 'Login'>> = ({ navigation }) => {
+
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  interface ILoginData {
-    email: string;
-    password: string;
-  }
-  const loginHendler = async (value: ILoginData) => {
+  const dispatch = useAppDispatch();
+
+  const loginHandler = async (value: ILoginData) => {
     try {
-      const responce = await postLogin(value);
-      await storeLoginData(responce.data);
+      const responce = await authApi.postSignIn(value);
+      await storeLoginData(responce.data.token);
+      dispatch({
+        type: 'auth/setUser',
+        payload: {
+          email: responce.data.email,
+          name: responce.data.name,
+        },
+      });
+      showMessage({
+        message: 'welcome',
+        type: 'info',
+      });
       navigation.navigate('Persons');
     } catch (err) {
-      const customErr = err as Error;
-      if (customErr.name === 'AxiosError') {
+      if (err instanceof AxiosError && err.response) {
         showMessage({
-          message: customErr.message,
+          message: err.response.data.message,
           type: 'info',
         });
-      } else {
-        throw createError('custom err', 'login');
       }
     }
   };
+
+  const forgotHandler = () => {
+    setEmail('');
+    setPassword('');
+    navigation.navigate('ChangePass');
+  };
+
   return (
     <View style={styles.sectionContainer}>
-      <Image source={appLogo} style={styles.appLogo} />
-      <TextInput
-        autoCapitalize="none"
-        style={styles.userData}
+      <Image
+        source={appLogo}
+        style={styles.appLogo}
+      />
+      <Input
         placeholder="EMAIL"
-        onChangeText={newText => setUsername(newText)}
+        onChange={(newText) => setEmail(newText)}
         defaultValue={email}
       />
-      <TextInput
-        secureTextEntry={true}
-        autoCapitalize="none"
-        style={styles.userData}
+      <Input
         placeholder="PASSWORD"
-        onChangeText={newText => setPassword(newText)}
+        onChange={(newText) => setPassword(newText)}
         defaultValue={password}
+        secureTextEntry={true}
       />
-      <TouchableOpacity style={styles.touchFogotPass} onPress={() => {navigation.navigate('ChangePass');}}>
-        <Text style={styles.textForgotPass}>forgot password</Text>
+      <TouchableOpacity
+        style={styles.touchFogotPass}
+        onPress={forgotHandler}
+      >
+        <Text style={styles.textForgotPass}>
+          forgot password
+        </Text>
       </TouchableOpacity>
-      <ManualButton callback={() => loginHendler({email, password})} text="Login"/>
+      <Button
+        onPress={() => loginHandler({ email, password })}
+        text="Login"
+      />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 42,
-  },
-  appLogo: {
-    marginTop: 100,
-    marginBottom: 130,
-    width: 150,
-    height: 150,
-    alignSelf: 'center',
-  },
-  userData: {
-    marginTop: 10,
-    marginBottom: 10,
-    padding: 5,
-    height: 40,
-    borderBottomColor: 'gray',
-    borderBottomWidth: 2,
-    fontSize: 16,
-  },
-  touchFogotPass: {
-    alignSelf: 'flex-end',
-    marginBottom: 50,
-  },
-  textForgotPass: {
-    textTransform: 'uppercase',
-    color: 'gray',
-  },
-});
 
 export default Login;

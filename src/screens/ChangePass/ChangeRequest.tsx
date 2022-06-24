@@ -1,67 +1,59 @@
-import React, {useState} from 'react';
-import {
-  View,
-  TextInput,
-  Image,
-  StyleSheet,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Image } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { AxiosError } from 'axios';
+import { showMessage } from 'react-native-flash-message';
 
-import { forgotPass } from '../../api/changePassApi';
-import ManualButton from '../../ui/components/ManualButton';
+import Input from '../../ui/components/input/Input';
+import Button from '../../ui/components/button/Button';
 import appLogo from '../../assets/images/appLogo.png';
+
+import changePassApi from '../../api/changePassApi';
+import styles from './changeRequest.style';
 
 type RootStackParamList = {
   ChangeRequest: undefined;
-  EmailConfirm: {email: string};
+  EmailConfirm: { email: string };
   PassConfirm: { secret: string };
 };
 
-const ChangeRequest: React.FC<NativeStackScreenProps<RootStackParamList,'ChangeRequest'>> = ({ navigation }) => {
+const ChangeRequest: React.FC<NativeStackScreenProps<RootStackParamList, 'ChangeRequest'>> = ({ navigation }) => {
 
   const [email, setEmail] = useState('');
 
-  const sendControlHendler = async () => {
-    navigation.navigate('EmailConfirm', { email });
-    await forgotPass({ email });
+  const sendControlHandler = async () => {
+    try {
+      const result = await changePassApi.forgotPass({ email });
+      showMessage({
+        message: result.data.message,
+        type: 'info',
+      });
+      navigation.navigate('EmailConfirm', { email });
+    } catch (e) {
+      if (e instanceof AxiosError && e.response) {
+        showMessage({
+          message: e.response.data.message,
+          type: 'danger',
+        });
+      }
+    }
   };
 
   return (
     <View style={styles.screenContainer}>
       <Image source={appLogo} style={styles.appLogo} />
-      <TextInput
-        autoCapitalize="none"
-        style={styles.enterEmail}
+      <Input
         placeholder="Email"
-        onChangeText={newText => setEmail(newText)}
+        onChange={text => setEmail(text)}
         defaultValue={email}
       />
-      <ManualButton callback={sendControlHendler} text="send control to email"/>
+      <Button
+        onPress={sendControlHandler}
+        text="send control to email"
+        viewStyles={styles.viewButton}
+      />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  screenContainer: {
-    marginTop: 32,
-    paddingHorizontal: 42,
-  },
-  appLogo: {
-    marginTop: 100,
-    marginBottom: 130,
-    width: 150,
-    height: 150,
-    alignSelf: 'center',
-  },
-  enterEmail: {
-    marginTop: 10,
-    marginBottom: 60,
-    padding: 5,
-    height: 40,
-    borderBottomColor: 'gray',
-    borderBottomWidth: 2,
-    fontSize: 16,
-  },
-});
 
 export default ChangeRequest;

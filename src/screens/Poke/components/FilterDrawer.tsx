@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 import { setFilter } from '../../../store/poke/reduser';
 import { getFilteredPokemons } from '../../../store/poke/thunk';
-import ManualButton from '../../../ui/components/ManualButton';
+import Button from '../../../ui/components/button/Button';
 import { useAppDispatch, useRootSelector } from '../../../store/storeHook';
 
 const FilterDrawer = () => {
@@ -19,7 +19,7 @@ const FilterDrawer = () => {
     pokeAbility: string;
   }
 
-  const applyHendler = async (value: IAbility) => {
+  const applyHandler = async (value: IAbility) => {
     try {
       await dispatch(setFilter(value.pokeAbility));
       dispatch(getFilteredPokemons());
@@ -46,10 +46,10 @@ const FilterDrawer = () => {
         defaultValue={pokeAbility}
       />
       <View style={styles.itemContainer}>
-        <ManualButton callback={() => applyHendler({pokeAbility})} text="apply"/>
+        <Button onPress={() => applyHandler({pokeAbility})} text="apply"/>
         </View>
       <View style={styles.itemContainer} >
-        <ManualButton callback={() => applyHendler({pokeAbility: ''})} text="clear"/>
+        <Button onPress={() => applyHandler({pokeAbility: ''})} text="clear"/>
       </View>
     </View>
   );
