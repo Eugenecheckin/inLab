@@ -7,6 +7,7 @@ import {
 import { showMessage } from 'react-native-flash-message';
 
 import Button from '../../../ui/components/button/Button';
+
 import { setFilter } from '../../../store/poke/reduser';
 import { getFilteredPokemons } from '../../../store/poke/thunk';
 import { useAppDispatch, useRootSelector } from '../../../store/storeHook';
@@ -16,8 +17,11 @@ const FilterDrawer = () => {
 
   const [right, setRight] = useState(5);
   const [pokeAbility, setPokeAbility] = useState('');
+
   const dispatch = useAppDispatch();
+
   const show = useRootSelector(({ poke }) => poke.isNoticed);
+
   useEffect(() => {
     show ? setRight(10) : setRight(-200);
   }, [show]);

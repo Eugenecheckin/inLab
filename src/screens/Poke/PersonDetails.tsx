@@ -21,7 +21,7 @@ import styles from './personDetail.Style';
 
 type RootStackParamList = {
   Persons: undefined;
-  PersonDetails: { id: string };
+  PersonDetails: { id: number };
   SimpleCam: undefined;
 }
 
