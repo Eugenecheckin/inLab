@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const defaultStyles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: '#7f7f7f',//'#c8c9cd',
+    backgroundColor: '#7f7f7f',
     borderRadius: 50,
   },
   text: {

@@ -2,11 +2,13 @@ import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { showMessage } from 'react-native-flash-message';
-import { useAppDispatch } from '../store/storeHook';
-import { storeLoginData } from '../utils/asyncStore';
+
 import Persons from '../screens/Poke/Persons';
 import TabBar from '../screens/PokeTab/TabBar';
 import PersonsTitle from './components/PersonsTitle';
+
+import { useAppDispatch } from '../store/storeHook';
+import { storeLoginData } from '../utils/asyncStore';
 import authApi from '../api/authApi';
 
 const Tab = createBottomTabNavigator();
